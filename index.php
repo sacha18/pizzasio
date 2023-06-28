@@ -10,11 +10,11 @@ $params = [
 if (isset($_GET['front'] )) {
     switch ($_GET['front']) {
         case 'inscription':
-            require_once('./controller/controllerUtilisateur.php');
+            require_once('./controller/controllerClient.php');
             Inscription();
             break;
         case 'connexion':
-            require_once('./controller/controllerUtilisateur.php');
+            require_once('./controller/controllerClient.php');
             Connexion();
             break;
         
@@ -24,6 +24,21 @@ if (isset($_GET['front'] )) {
             Default404();
             
             break;
+        }
+    }
+    elseif (isset($_GET['form'])) {
+        switch ($_GET['form']) {
+            case 'inscription':
+                require_once('./controller/controllerClient.php');
+                Inscrire($postParams);
+                break;
+            case 'connexion':
+                require_once('./controller/controllerClient.php');
+                Connecter($postParams);
+                break;
+            
+            default:
+                break;
         }
     }
     else {

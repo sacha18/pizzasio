@@ -13,4 +13,13 @@ Autoloader::register();
     <script type="text/javascript" src="<? SITE_URL; ?>/assets/js/bootstrap.bundle.min.js"></script>
     <meta charset="UTF-8">
 </head>
+<header>
+    <?php session_start(); ?>
+    <?php if (isset($_SESSION['mail'])) {
+        echo $_SESSION['mail'] ;
+
+    } else {
+        echo 'PAS DE SESSION';
+    } ?>
+</header>
 <body>

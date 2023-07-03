@@ -9,6 +9,11 @@ $params = [
 
 if (isset($_GET['front'] )) {
     switch ($_GET['front']) {
+        //a supprimer à la fin
+        case 'test' :
+            require_once('./controller/controllerTest.php');
+            Test($params);
+            break;
         case 'inscription':
             require_once('./controller/controllerClient.php');
             Inscription();

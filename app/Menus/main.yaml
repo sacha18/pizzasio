@@ -1,0 +1,46 @@
+# Menus
+accueil:
+   title: Accueil
+   url: /
+   perm: none
+   icon: <i class="nav-icon fas fa-icon-home"></i>
+   class: main-menu-accueil
+ingredient:
+  title: Ingrédients
+  url: /Ingredient
+  icon: <i class="nav-icon fa-solid fa-utensils"></i>
+  subs:
+    etape-ingredient:
+      title: Etape
+      url: /Step
+      icon: <i class="fa-solid fa-list-ol"></i>
+    categorie-ingredient:
+      title: Categorie
+      url: /Category
+      icon: <i class="nav-icon fa-solid fa-folder-tree"></i>
+    gerer-ingredient:
+      title: Ingrédients
+      url: /Ingredient
+      icon: <i class="nav-icon fa-solid fa-utensils"></i>
+pizza:
+  title: Pizza
+  url: /Pizza
+  icon: <i class="nav-icon fas fa-pizza-slice"></i>
+  subs:
+    create-pizza:
+      title: Création Pizza
+      url: /Pizza/edit/new
+      icon: <i class="nav-icon fa-solid fa-circle-plus "></i>
+    gerer-pizza:
+      title: Gérer Pizza
+      url: /Pizza
+      icon: <i class="nav-icon fas fa-pizza-slice"></i>
+admin:
+  title: Administration
+  url: /Admin
+  icon: <i class="nav-icon fas fa-gears"></i>
+  subs:
+    users:
+      title: Utilisateurs
+      url: /Users
+      icon: <i class="nav-icon fas fa-users-gear"></i>

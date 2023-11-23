@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 class Dev extends BaseController
 {
     public function getIndex()
@@ -10,13 +11,17 @@ class Dev extends BaseController
         return $this->view('/dev/index', ['categories' => $categories]);
     }
 
-    public function postResult()
+    public function getResult()
     {
-        $data = $this->request->getPost();
-        return $this->view('/dev/result', ['data' => $data]);
+
+        $composePizzaModel = model('ComposePizzaModel');
+  
+        $a = $composePizzaModel->getIngredientByPizzaId(1);
+        return $this->view('/dev/result', ['a' => $a]);
     }
 
-    public function getAjaxIngredients() {
+    public function getAjaxIngredients()
+    {
         $idCateg = $this->request->getVar('idCateg');
         $ingredientModel = model('IngredientModel');
         $ingredients = $ingredientModel->getIngredientByIdCategory($idCateg);
@@ -24,4 +29,3 @@ class Dev extends BaseController
         return $this->response->setJSON($ingredients);
     }
 }
-

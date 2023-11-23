@@ -1,6 +1,3 @@
-<pre>
-    <?= print_r($step); ?>
-</pre>
 <div class="container">
     <div class="card">
         <div class="card-header">
@@ -42,6 +39,9 @@
                         </div>
                         <!--end::Step-Name-->
                         <?php
+
+                        use SebastianBergmann\CodeCoverage\Driver\Selector;
+
                         foreach ($steps as $s) :
                         ?>
                             <!--begin::Step-->
@@ -81,7 +81,7 @@
                 <!--begin::Content-->
                 <div class="flex-row-fluid">
                     <!--begin::Form-->
-                    <form class="form w-lg-500px mx-auto" novalidate="novalidate">
+                    <form class="form w-lg-500px mx-auto" action="/pizza/result" method="post" novalidate="novalidate">
                         <!--begin::Group-->
                         <div class="mb-5">
                             <!--begin::Step Name-->
@@ -93,7 +93,7 @@
                                     <!--end::Label-->
 
                                     <!--begin::Input-->
-                                    <input type="text" class="form-control form-control-solid" name="input1" placeholder="" value="" />
+                                    <input type="text" class="form-control form-control-solid" name="name" value="<?= isset($pizza) ? $pizza['name'] : '' ?>" />
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
@@ -109,17 +109,94 @@
                                     <!--end::Label-->
 
                                     <!--begin::Input-->
-                                    <select class="form-select form-select-solid" name="id_category">
+                                    <select class="form-select form-select-solid" name="pate">
                                         <?php
-                                        foreach ($step as $s) {
+                                        foreach ($pate as $p) {
                                         ?>
-                                            <option value="<?= $s['id']; ?>">
-                                                <?= $s['name']; ?>
+                                            <option <?= (isset($pizza) && ($pizza['dough'] == $p['id'])) ? 'selected' : '' ?> value="<?= $p['id']; ?>">
+                                                <?= $p['name']; ?>
                                             </option>
                                         <?php
                                         }
                                         ?>
                                     </select>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+
+                                <!--begin::Input group-->
+                            </div>
+                            <!--end::Group-->
+                            <div class="flex-column" data-kt-stepper-element="content">
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-10">
+                                    <!--begin::Label-->
+                                    <label class="form-label">Nom de la base</label>
+                                    <!--end::Label-->
+
+                                    <!--begin::Input-->
+                                    <select class="form-select form-select-solid" name="base">
+                                        <?php
+                                        foreach ($base as $b) {
+                                        ?>
+                                            <option <?= (isset($pizza) && ($pizza['base'] == $p['id'])) ? 'selected' : '' ?> value="<?= $b['id']; ?>">
+                                                <?= $b['name']; ?>
+                                            </option>
+                                        <?php
+                                        }
+                                        ?>
+                                    </select>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+
+                                <!--begin::Input group-->
+                            </div>
+                            <!--end::Group-->
+                            <div class="flex-column" data-kt-stepper-element="content">
+                                <!--begin::Input group-->
+                                <div class="fv-row">
+                                    <!--begin::Label-->
+                                    <!--end::Label-->
+
+                                    <!--begin::Input-->
+
+                                    <label class="form-label">Ingrédients</label>
+                                    <?php if (isset($pizza)) {
+
+                                        echo '<p class="fs-6">Ingrédient de la pizza</p>';
+                                        foreach ($pizza_ing as $p_ing) {
+                                    ?>
+
+
+                                            <div class="btn btn-sm btn-outline me-4  position-relative">
+                                                <?php
+                                                echo $p_ing->name;
+                                                ?>
+                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                    X
+                                                </span>
+                                            </div>
+
+                                    <?php }
+                                    } ?>
+                                    <div class="d-flex flex-row py-5">
+                                        <select class="form-select me-4" name="ingredients" id="categ">
+                                            <?php
+                                            foreach ($categories as $cat) {
+                                            ?>
+                                                <option value="<?= $cat['id']; ?>">
+
+                                                    <?= $cat['name']; ?>
+                                                </option>
+                                            <?php
+                                            }
+                                            ?>
+                                        </select>
+                                        <a href="#" class="btn btn-success " id="btn-add">Ajouter</a>
+                                    </div>
+                                    <div id="emplacement">
+                                    </div>
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
@@ -140,7 +217,7 @@
 
                                 <!--begin::Wrapper-->
                                 <div>
-                                    <button type="button" class="btn btn-primary" data-kt-stepper-action="submit">
+                                    <button type="submit" class="btn btn-primary" data-kt-stepper-action="submit">
                                         <span class="indicator-label">
                                             Submit
                                         </span>
@@ -184,5 +261,32 @@
         stepper.on("kt.stepper.previous", function(stepper) {
             stepper.goPrevious(); // go previous step
         });
+
+        $("#btn-add").on('click', function(e) {
+            e.preventDefault()
+            const id_categ = $("#categ").val()
+            $.ajax({
+                url: '/Pizza/AjaxIngredients',
+                type: 'GET',
+                data: {
+                    idCateg: id_categ
+                },
+                success: function(data) {
+                    let select = `<div class="d-flex flex-row "><select class="form-select mb-4 me-4" name="ingredients[]">`
+
+                    data.forEach(ing => {
+                        var option = "<option value='" + ing.id + "'>" + ing.name + "</option>"
+                        select += option
+                    })
+                    select += '</select><i class="fa-solid fa-pencil me-4"></i></div>';
+                    $("#emplacement").append(select)
+
+                },
+                error: function(hxr, status, error) {
+                    console.log(error);
+                }
+            })
+
+        })
     })
 </script>

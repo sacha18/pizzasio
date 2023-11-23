@@ -22,52 +22,62 @@ class Pizza extends BaseController
         $categories = $categoryModel->getAllCategory();
         $stepModel = model('StepModel');
         $step = $stepModel->getAllStep();
-        // $all = array();
-        // foreach ($steps as $step) {
-        //     $line_step = array();
-            
-        //     foreach ($categories as $cat) {
-        //         $line_step = array();
-        //         if ($cat['id_step'] == $step['id']) {
-        //             $line_categ[] = $cat;
-        //             foreach ($ingredient as $ing) {
-        //                 $line_ing = array();
 
-        //                 if ($ing['id_category'] == $cat['id']) {
-        //                     $line_int[] = $ing;
-        //                 }
-        //                 $line_categ[] = $line_ing;
-        //             }
-
-        //         }
-        //         $line_step[] = $line_categ;
-        //     }
-        //     $all[] = $line_step;
-        // }
+        $ingredientModel = model('IngredientModel');
+        $pate =  $ingredientModel->getIngredientByIdCategory(10);
+        $base =  $ingredientModel->getIngredientByIdCategory(13);
         if ($id_pizza == 'new') {
             $this->addBreadcrumb('Création pizza ', ['Pizza', 'edit', 'new']);
-            return $this->view('/pizza/edit', ['steps' => $steps, 'categories' => $categories, 'step' => $step]);
+            return $this->view('/pizza/edit', [
+                'steps' => $steps,
+                'categories' => $categories,
+                'step' => $step,
+                'pate' => $pate,
+                'base' => $base
+            ]);
         }
-        $this->title = "Gérer la pizza";
         $pizzaModel = model('PizzaModel');
         $pizza = $pizzaModel->getPizzaById($id_pizza);
-        $this->addBreadcrumb('Edition de ' . $pizza['name'], ['Pizza']);
-
-
-        
+        $this->title = "Gérer la pizza";
         if ($pizza) {
-            return $this->view('/pizza/edit', ['pizza' => $pizza]);
+            $composePizzaModel = model('ComposePizzaModel');
+            $pizza_ing = $composePizzaModel->getIngredientByPizzaId($pizza['id']);
+            $this->addBreadcrumb('Edition de ' . $pizza['name'], ['Pizza']);
+            return $this->view('/pizza/edit', [
+                'steps' => $steps,
+                'categories' => $categories,
+                'step' => $step,
+                'pate' => $pate,
+                'base' => $base,
+                'pizza' => $pizza,
+                'pizza_ing' => $pizza_ing
+            ]);
         }
 
         return $this->redirect('Pizza');
     }
 
-    // public function getDelete()
-    // {
-    //     $id = $this->request->getGet('id');
-    //     $pizzaModel = model('PizzaModel');        
-    //     $pizzaModel->deletePizz($id);
-    //     $this->success("La pizza a bien été supprimé");
-    //     return $this->redirect('Pizza');
-    // }
+
+    public function postResult()
+    {
+        $data = $this->request->getPost();
+        $pizzaModel = model('PizzaModel');
+        $id = $pizzaModel->createPizza($data['name'], $data['base'], $data['pate']);
+        $composePizzaModel = model('ComposePizzaModel');
+        $data_ing = array();
+        foreach ($data['ingredients'] as $ing) {
+            $data_ing[] = ['id_pizza' => (int) $id, 'id_ingredient' => (int) $ing];
+        }
+        $composePizzaModel->insertPizzaIngredients($data_ing);
+        return $this->redirect('Pizza');
+    }
+
+    public function getAjaxIngredients()
+    {
+        $idCateg = $this->request->getVar('idCateg');
+        $ingredientModel = model('IngredientModel');
+        $ingredients = $ingredientModel->getIngredientByIdCategory($idCateg);
+
+        return $this->response->setJSON($ingredients);
+    }
 }

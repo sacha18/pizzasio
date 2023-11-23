@@ -8,7 +8,6 @@ class Ingredient extends BaseController
 {
     public function getIndex()
     {
-
         return $this->view('/ingredient/index');
     }
 

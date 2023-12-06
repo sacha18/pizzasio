@@ -271,33 +271,30 @@
             $("#pizza-price").text(0 + '€')
         }
 
-        function updateTotalPrice() {
-    var ancienPrix = 0;
-    $("#emplacement select").each(function() {
-        ancienPrix += parseFloat($(this).find('option:selected').data('price'));
-    });
-    var total = ancienPrix.toFixed(2);
-    $("#pizza-price").text(total + '€');
-}
+        const updateTotalPrice = () => {
+            var ancienPrix = 0;
+            $("#emplacement select").each(function() {
+                ancienPrix += parseFloat($(this).find('option:selected').data('price'))
+            });
+            var total = ancienPrix.toFixed(2)
+            $("#pizza-price").text(total + '€')
+        }
 
         $("#emplacement").on('change', 'select', function() {
-            updateTotalPrice();
+            updateTotalPrice()
         });
 
         $("#emplacement").on('click', '#removeIngredient', function(e) {
     e.preventDefault();
 
-    // Retirer le parent de l'élément actuel (le div contenant le select et le bouton)
-    $(this).closest('.d-flex').remove(); // Use closest() to find the closest ancestor with class 'd-flex'
+    $(this).closest('.d-flex').remove(); 
 
-    // Calculer le nouveau prix
-    var prix = parseFloat($(this).closest('.d-flex').find('select').find('option:selected').data('price'));
-    var ancienPrix = parseFloat($("#pizza-price").text().replace('€', ''));
-    var total = ancienPrix - prix;
+    var prix = parseFloat($(this).closest('.d-flex').find('select').find('option:selected').data('price'))
+    var ancienPrix = parseFloat($("#pizza-price").text().replace('€', ''))
+    var total = ancienPrix - prix
 
-    // Mettre à jour le prix total
-    total = total.toFixed(2);
-    $("#pizza-price").text(total + '€');
+    total = total.toFixed(2)
+    $("#pizza-price").text(total + '€')
 });
     
     $("#btn-add").on('click', function(e) {
@@ -320,7 +317,7 @@
                 select += `</select><div class="flex-col"><i class="fa-solid fa-pencil me-4" role="button"></i>${removeIngredient}</div></div>`
 
                     $("#emplacement").append(select)
-                    $("#emplacement select").last().change();
+                    $("#emplacement select").last().change()
 
                 },
                 error: function(hxr, status, error) {

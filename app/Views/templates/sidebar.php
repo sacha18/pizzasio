@@ -4,7 +4,7 @@
   <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
     <!--begin::Logo image-->
     <a href="/">
-        <img alt="Logo" src="/assets/media/logos/color-logo-no-bg.svg" class="h-30px app-sidebar-logo-default">
+        <img alt="Logo" src="/assets/media/logos/PizzaSioIconOnly.svg" class="h-45px app-sidebar-logo-default">
     </a>
     <!--end::Logo image-->
     <!--begin::Sidebar toggle-->

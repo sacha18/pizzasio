@@ -184,6 +184,9 @@
                                         <select class="form-select me-4" name="ingredients" id="categ">
                                             <?php
                                             foreach ($categories as $cat) {
+                                                if ($cat['id'] == 10 || $cat['id'] == 13) {
+                                                    continue;
+                                                }
                                             ?>
                                                 <option value="<?= $cat['id']; ?>">
 
@@ -214,7 +217,9 @@
                                     </button>
                                 </div>
                                 <!--end::Wrapper-->
-
+                                        <div>
+                                            <p class="fs-6">Prix de la pizza : <span id="pizza-price"></span></p>
+                                        </div>
                                 <!--begin::Wrapper-->
                                 <div>
                                     <button type="submit" class="btn btn-primary" data-kt-stepper-action="submit">
@@ -261,31 +266,70 @@
         stepper.on("kt.stepper.previous", function(stepper) {
             stepper.goPrevious(); // go previous step
         });
+        
+        if ($("#pizza-price").text() == '') {
+            $("#pizza-price").text(0 + '€')
+        }
 
-        $("#btn-add").on('click', function(e) {
-            e.preventDefault()
-            const id_categ = $("#categ").val()
-            $.ajax({
-                url: '/Pizza/AjaxIngredients',
-                type: 'GET',
-                data: {
-                    idCateg: id_categ
-                },
-                success: function(data) {
-                    let select = `<div class="d-flex flex-row "><select class="form-select mb-4 me-4" name="ingredients[]">`
+        function updateTotalPrice() {
+    var ancienPrix = 0;
+    $("#emplacement select").each(function() {
+        ancienPrix += parseFloat($(this).find('option:selected').data('price'));
+    });
+    var total = ancienPrix.toFixed(2);
+    $("#pizza-price").text(total + '€');
+}
 
-                    data.forEach(ing => {
-                        var option = "<option value='" + ing.id + "'>" + ing.name + "</option>"
-                        select += option
-                    })
-                    select += '</select><i class="fa-solid fa-pencil me-4"></i></div>';
+        $("#emplacement").on('change', 'select', function() {
+            updateTotalPrice();
+        });
+
+        $("#emplacement").on('click', '#removeIngredient', function(e) {
+    e.preventDefault();
+
+    // Retirer le parent de l'élément actuel (le div contenant le select et le bouton)
+    $(this).closest('.d-flex').remove(); // Use closest() to find the closest ancestor with class 'd-flex'
+
+    // Calculer le nouveau prix
+    var prix = parseFloat($(this).closest('.d-flex').find('select').find('option:selected').data('price'));
+    var ancienPrix = parseFloat($("#pizza-price").text().replace('€', ''));
+    var total = ancienPrix - prix;
+
+    // Mettre à jour le prix total
+    total = total.toFixed(2);
+    $("#pizza-price").text(total + '€');
+});
+    
+    $("#btn-add").on('click', function(e) {
+        e.preventDefault()
+        const id_categ = $("#categ").val()
+        $.ajax({
+            url: '/Pizza/AjaxIngredients',
+            type: 'GET',
+            data: {
+                idCateg: id_categ
+            },
+            success: function(data) {
+                let select = `<div class="d-flex flex-row "><select class="form-select mb-4 me-4" name="ingredients[]">`
+
+                data.forEach(ing => {
+                    var option = `<option data-price="${ing.price}" value="${ing.id}">${ing.name} (+${ing.price})</option>`
+                    select += option
+                })
+                const removeIngredient = `<i class="fa-solid fa-x" id="removeIngredient" role="button" ></i>`
+                select += `</select><div class="flex-col"><i class="fa-solid fa-pencil me-4" role="button"></i>${removeIngredient}</div></div>`
+
                     $("#emplacement").append(select)
+                    $("#emplacement select").last().change();
 
                 },
                 error: function(hxr, status, error) {
                     console.log(error);
                 }
             })
+
+
+            
 
         })
     })

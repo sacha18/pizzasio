@@ -109,12 +109,12 @@
                                     <!--end::Label-->
 
                                     <!--begin::Input-->
-                                    <select class="form-select form-select-solid" name="pate">
+                                    <select class="form-select form-select-solid" data-old-price="0" name="pate">
                                         <?php
                                         foreach ($pate as $p) {
                                         ?>
-                                            <option <?= (isset($pizza) && ($pizza['dough'] == $p['id'])) ? 'selected' : '' ?> value="<?= $p['id']; ?>">
-                                                <?= $p['name']; ?>
+                                            <option <?= (isset($pizza) && ($pizza['dough'] == $p['id'])) ? 'selected' : '' ?> value="<?= $p['id']; ?>" data-price="<?= $p['price'] ?>">
+                                                <?= $p['name'] . ' ' . '(+ ' . $p['price'] . ' €)'; ?>
                                             </option>
                                         <?php
                                         }
@@ -135,12 +135,12 @@
                                     <!--end::Label-->
 
                                     <!--begin::Input-->
-                                    <select class="form-select form-select-solid" name="base">
+                                    <select class="form-select form-select-solid" name="base" data-old-price="0">
                                         <?php
                                         foreach ($base as $b) {
                                         ?>
-                                            <option <?= (isset($pizza) && ($pizza['base'] == $p['id'])) ? 'selected' : '' ?> value="<?= $b['id']; ?>">
-                                                <?= $b['name']; ?>
+                                            <option <?= (isset($pizza) && ($pizza['base'] == $p['id'])) ? 'selected' : '' ?> value="<?= $b['id']; ?>" data-price="<?= $b['price'] ?>">
+                                                <?= $b['name'] . ' ' . '(+ ' . $b['price'] . ' €)'; ?>
                                             </option>
                                         <?php
                                         }
@@ -218,7 +218,7 @@
                                 </div>
                                 <!--end::Wrapper-->
                                 <div>
-                                    <p class="fs-6">Prix de la pizza : <span id="pizza-price"></span></p>
+                                    <p class="fs-6">Prix de la pizza : <span id="prixtotal">0</span>€</p>
                                 </div>
                                 <!--begin::Wrapper-->
                                 <div>
@@ -267,32 +267,6 @@
             stepper.goPrevious(); // go previous step
         });
 
-        if ($("#pizza-price").text() == '') {
-            $("#pizza-price").text(0 + '€')
-        }
-
-        $("#emplacement").on('change', 'select', function() {
-            var ancienPrix = 0;
-            $("#emplacement select").each(function() {
-                ancienPrix += parseFloat($(this).find('option:selected').data('price'))
-            });
-            var total = ancienPrix.toFixed(2)
-            $("#pizza-price").text(total + '€')
-        });
-
-        $("#emplacement").on('click', '#removeIngredient', function(e) {
-            e.preventDefault();
-
-            $(this).closest('.d-flex').remove();
-
-            var prix = parseFloat($(this).closest('.d-flex').find('select').find('option:selected').data('price'))
-            var ancienPrix = parseFloat($("#pizza-price").text().replace('€', ''))
-            var total = ancienPrix - prix
-
-            total = total.toFixed(2)
-            $("#pizza-price").text(total + '€')
-        });
-
         $("#btn-add").on('click', function(e) {
             e.preventDefault()
             const id_categ = $("#categ").val()
@@ -303,27 +277,43 @@
                     idCateg: id_categ
                 },
                 success: function(data) {
-                    let select = `<div class="d-flex flex-row "><select class="form-select mb-4 me-4" name="ingredients[]">`
+                    let select = `<div class="d-flex flex-row align-items-center mb-4 "><select class="form-select mb-4 me-4 flex-grow-1" data-old-price="0" name="ingredients[]">`
 
                     data.forEach(ing => {
-                        var option = `<option data-price="${ing.price}" value="${ing.id}">${ing.name} (+${ing.price})</option>`
+                        var option = `<option data-price="${ing.price}" value="${ing.id}">${ing.name} (+ ${ing.price})</option>`
                         select += option
                     })
-                    const removeIngredient = `<i class="fa-solid fa-x" id="removeIngredient" role="button" ></i>`
-                    select += `</select><div class="flex-col"><i class="fa-solid fa-pencil me-4" role="button"></i>${removeIngredient}</div></div>`
+                    select += `</select><div></div><i class="fa-solid fa-x" id="removeIngredient" role="button" ></i></div></div>`
 
                     $("#emplacement").append(select)
                     $("#emplacement select").last().change()
 
                 },
                 error: function(hxr, status, error) {
-                    console.log(error);
+                    console.log(error)
                 }
             })
 
+            $(document).on('change', 'select', function() {
 
 
+                var prix = parseFloat($("#prixtotal").html())
+                var selectedPrice = parseFloat($(this).find('option:selected').data('price'))
+                var oldPrice = parseFloat($(this).data('old-price'))
 
+                $("#prixtotal").text((prix + selectedPrice - oldPrice).toFixed(2))
+                $(this).data('old-price', selectedPrice)
+
+            })
+
+            $(document).on('click', '#removeIngredient', function() {
+
+                var prix = parseFloat($(this).closest('.d-flex').find('select').find('option:selected').data('price'))
+                var ancienPrix = parseFloat($("#prixtotal").text())
+
+                $(this).closest('.d-flex').remove();
+                $("#prixtotal").text((ancienPrix - prix).toFixed(2))
+            })
         })
     })
 </script>

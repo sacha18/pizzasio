@@ -40,12 +40,10 @@
                         <!--end::Step-Name-->
                         <?php
 
-                        use SebastianBergmann\CodeCoverage\Driver\Selector;
-
                         foreach ($steps as $s) :
                         ?>
                             <!--begin::Step-->
-                            <div class="stepper-item me-5 current" data-kt-stepper-element="nav">
+                            <div class="stepper-item me-5" data-kt-stepper-element="nav">
                                 <!--begin::Wrapper-->
                                 <div class="stepper-wrapper d-flex align-items-center">
                                     <!--begin::Icon-->

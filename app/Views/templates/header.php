@@ -27,12 +27,12 @@
                <!--begin::Menu-->
                <div class="menu menu-rounded menu-column menu-lg-row my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0" id="kt_app_header_menu" data-kt-menu="true">
 
-                <ol class="breadcrumb text-muted fs-6 fw-semibold">
-                  <li class="breadcrumb-item"><a href="/" class="">MyApp</a></li>
-                  <?php foreach ($breadcrumb as $bitem) { ?>
-                    <li class="breadcrumb-item"><a href="<?= $bitem['url'] ?>" class=""><?= $bitem['text'] ?></a></li>
-                  <?php } ?>
-                </ol>
+                 <ol class="breadcrumb text-muted fs-6 fw-semibold">
+                   <li class="breadcrumb-item"><a href="/" class="">Pizza SIO</a></li>
+                   <?php foreach ($breadcrumb as $bitem) { ?>
+                     <li class="breadcrumb-item"><a href="<?= $bitem['url'] ?>" class=""><?= $bitem['text'] ?></a></li>
+                   <?php } ?>
+                 </ol>
                </div>
                <!--end::Menu-->
              </div>
@@ -41,7 +41,7 @@
              <!--begin::Navbar-->
              <div class="app-navbar flex-shrink-0">
 
-                 
+
                <!--begin::Theme mode-->
 
                <div class="app-navbar-item ms-1 ms-lg-3">
@@ -140,7 +140,7 @@
                        <!--begin::Username-->
                        <div class="d-flex flex-column">
                          <div class="fw-bold d-flex align-items-center fs-5">
-                          <?= $user->getUsername() ?>
+                           <?= $user->getUsername() ?>
                          </div>
                          <a href="#" class="fw-semibold text-muted text-hover-primary fs-7"><?= $user->getEmail() ?></a>
                        </div>

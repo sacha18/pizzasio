@@ -45,4 +45,41 @@ class PizzaModel extends Model
     public function getPizzaById($id) {
         return $this->find($id);
     }
+
+    function getPaginatedPizza($start, $length, $searchValue, $orderColumnName, $orderDirection)
+
+    {
+        $builder = $this->builder();
+
+        // Recherche
+        if (!empty($searchValue)) {
+            $builder->like('id', $searchValue);
+            $builder->orlike('name', $searchValue);
+            $builder->orlike('active', $searchValue);
+        }
+
+        // Tri
+        if ($orderColumnName && $orderDirection) {
+            $builder->orderBy($orderColumnName, $orderDirection);
+        }
+        $builder->limit($length, $start);
+        return $builder->get()->getResultArray();
+    }
+
+    public function getTotalPizza()
+    {
+        return $this->builder()->countAllResults();
+    }
+
+    public function getFilteredPizza($searchValue)
+    {
+        $builder = $this->builder();
+        // @phpstan-ignore-next-line
+        if (!empty($searchValue)) {
+            $builder->like('id', $searchValue);
+            $builder->orlike('name', $searchValue);
+            $builder->orlike('active', $searchValue);
+        }
+        return $builder->countAllResults();
+    }
 }

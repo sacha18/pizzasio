@@ -57,6 +57,63 @@ class Pizza extends BaseController
         return $this->redirect('Pizza');
     }
 
+    public function getAjaxPizzaContent() {
+        $pizzaModel = model('PizzaModel');
+        $composePizzaModel = model('ComposePizzaModel');
+        $ingredientModel = model('IngredientModel');
+        $idPizza = $this->request->getVar('idPizza');
+        $pizza = $pizzaModel->getPizzaById($idPizza);
+        if ($pizza) {
+            $pizza_ing = $composePizzaModel->getIngredientByPizzaId($pizza['id']);
+            $base = $ingredientModel->getIngredientById($pizza['base']);
+            $pate = $ingredientModel->getIngredientById($pizza['dough']);
+        }
+        $result = array();
+        $result['pizza'] = $pizza;
+        $result['ingredients'] = $pizza_ing;
+        $result['base'] = $base;
+        $result['pate'] = $pate;
+        return $this->response->setJSON($result);
+
+    }
+
+    public function postSearchPizza()
+    {
+        $pizzaModel = model('pizzaModel');
+
+        // Paramètres de pagination et de recherche envoyés par DataTables
+        $draw        = $this->request->getPost('draw');
+        $start       = $this->request->getPost('start');
+        $length      = $this->request->getPost('length');
+        $searchValue = $this->request->getPost('search')['value'];
+
+        // Obtenez les informations sur le tri envoyées par DataTables
+
+        $orderColumnIndex = $this->request->getPost('order')[0]['column'];
+        $orderDirection = $this->request->getPost('order')[0]['dir'];
+        $orderColumnName = $this->request->getPost('columns')[$orderColumnIndex]['data'];
+
+
+
+        // Obtenez les données triées et filtrées pour la colonne "sku_syaleo"
+        $data = $pizzaModel->getPaginatedPizza($start, $length, $searchValue, $orderColumnName, $orderDirection);
+
+
+
+        // Obtenez le nombre total de lignes sans filtre
+        $totalRecords = $pizzaModel->getTotalPizza();
+
+        // Obtenez le nombre total de lignes filtrées pour la recherche
+        $filteredRecords = $pizzaModel->getFilteredPizza($searchValue);
+
+        $result = [
+            'draw'            => $draw,
+            'recordsTotal'    => $totalRecords,
+            'recordsFiltered' => $filteredRecords,
+            'data'            => $data,
+        ];
+        return $this->response->setJSON($result);
+    }
 
     public function postResult()
     {
@@ -71,6 +128,7 @@ class Pizza extends BaseController
         $composePizzaModel->insertPizzaIngredients($data_ing);
         return $this->redirect('Pizza');
     }
+
 
     public function getAjaxIngredients()
     {

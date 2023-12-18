@@ -52,7 +52,7 @@
             <div class="mb-3 row">
                 <label for="price" class="col-sm-2 col-form-label">Prix</label>
                 <div class="col-sm-10">
-                    <input for="price"  id="price" type="price" class="form-control"   name="price"required>
+                    <input for="price"  id="price" type="price" class="form-control"   name="price"value="<?= isset($ing) ? $ing['price'] : ''; ?>" required>
                 </div>
                 </div>
                 <div class="mb-3 row">

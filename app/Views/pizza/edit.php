@@ -109,12 +109,12 @@
                                     <!--end::Label-->
 
                                     <!--begin::Input-->
-                                    <select class="form-select form-select-solid" name="pate">
+                                    <select class="form-select form-select-solid selectIngredient" data-old-price="0" name="pate">
                                         <?php
                                         foreach ($pate as $p) {
                                         ?>
-                                            <option <?= (isset($pizza) && ($pizza['dough'] == $p['id'])) ? 'selected' : '' ?> value="<?= $p['id']; ?>">
-                                                <?= $p['name']; ?>
+                                            <option <?= (isset($pizza) && ($pizza['dough'] == $p['id'])) ? 'selected' : '' ?> value="<?= $p['id']; ?>" data-price="<?= $p['price'] ?>">
+                                                <?= $p['name'] . ' ' . '(+ ' . $p['price'] . ' €)'; ?>
                                             </option>
                                         <?php
                                         }
@@ -135,12 +135,12 @@
                                     <!--end::Label-->
 
                                     <!--begin::Input-->
-                                    <select class="form-select form-select-solid" name="base">
+                                    <select class="form-select form-select-solid selectIngredient" name="base" data-old-price="0">
                                         <?php
                                         foreach ($base as $b) {
                                         ?>
-                                            <option <?= (isset($pizza) && ($pizza['base'] == $p['id'])) ? 'selected' : '' ?> value="<?= $b['id']; ?>">
-                                                <?= $b['name']; ?>
+                                            <option <?= (isset($pizza) && ($pizza['base'] == $p['id'])) ? 'selected' : '' ?> value="<?= $b['id']; ?>" data-price="<?= $b['price'] ?>">
+                                                <?= $b['name'] . ' ' . '(+ ' . $b['price'] . ' €)'; ?>
                                             </option>
                                         <?php
                                         }
@@ -184,6 +184,9 @@
                                         <select class="form-select me-4" name="ingredients" id="categ">
                                             <?php
                                             foreach ($categories as $cat) {
+                                                if ($cat['id'] == 10 || $cat['id'] == 13) {
+                                                    continue;
+                                                }
                                             ?>
                                                 <option value="<?= $cat['id']; ?>">
 
@@ -214,7 +217,9 @@
                                     </button>
                                 </div>
                                 <!--end::Wrapper-->
-
+                                <div>
+                                    <p class="fs-6">Prix de la pizza : <span id="prixtotal">0</span>€</p>
+                                </div>
                                 <!--begin::Wrapper-->
                                 <div>
                                     <button type="submit" class="btn btn-primary" data-kt-stepper-action="submit">
@@ -262,6 +267,29 @@
             stepper.goPrevious(); // go previous step
         });
 
+        $(document).on('change', '.selectIngredient', function() {
+
+
+            var prix = parseFloat($("#prixtotal").html())
+            var selectedPrice = parseFloat($(this).find('option:selected').data('price'))
+            var oldPrice = parseFloat($(this).data('old-price'))
+            console.log($(this).find('option:selected').data('price'));
+            console.log('prix', prix,
+                'selectedPrice', selectedPrice,
+                'oldPrice', oldPrice);
+            $("#prixtotal").html((prix + selectedPrice - oldPrice).toFixed(2))
+            $(this).data('old-price', selectedPrice)
+
+        })
+
+        $(document).on('click', '#removeIngredient', function() {
+
+            var prix = parseFloat($(this).closest('.d-flex').find('select').find('option:selected').data('price'))
+            var ancienPrix = parseFloat($("#prixtotal").html())
+
+            $(this).closest('.d-flex').remove();
+            $("#prixtotal").html((ancienPrix - prix).toFixed(2))
+        })
         $("#btn-add").on('click', function(e) {
             e.preventDefault()
             const id_categ = $("#categ").val()
@@ -272,18 +300,20 @@
                     idCateg: id_categ
                 },
                 success: function(data) {
-                    let select = `<div class="d-flex flex-row "><select class="form-select mb-4 me-4" name="ingredients[]">`
+                    let select = `<div class="d-flex flex-row align-items-center mb-4 "><select class="form-select mb-4 me-4 flex-grow-1 selectIngredient" data-old-price="0" name="ingredients[]">`
 
                     data.forEach(ing => {
-                        var option = "<option value='" + ing.id + "'>" + ing.name + "</option>"
+                        var option = `<option data-price="${ing.price}" value="${ing.id}">${ing.name} (+ ${ing.price})</option>`
                         select += option
                     })
-                    select += '</select><i class="fa-solid fa-pencil me-4"></i></div>';
+                    select += `</select><div></div><i class="fa-solid fa-x" id="removeIngredient" role="button" ></i></div></div>`
+
                     $("#emplacement").append(select)
+                    $("#emplacement .selectIngredient").last().change()
 
                 },
                 error: function(hxr, status, error) {
-                    console.log(error);
+                    console.log(error)
                 }
             })
 

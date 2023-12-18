@@ -15,9 +15,15 @@ class Dev extends BaseController
     {
 
         $composePizzaModel = model('ComposePizzaModel');
-  
+
         $a = $composePizzaModel->getIngredientByPizzaId(1);
         return $this->view('/dev/result', ['a' => $a]);
+    }
+
+    public function postResult()
+    {
+                
+        return $this->view('/dev/result', ['a' => $_POST]);
     }
 
     public function getAjaxIngredients()

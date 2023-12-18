@@ -79,7 +79,7 @@
                 <!--begin::Content-->
                 <div class="flex-row-fluid">
                     <!--begin::Form-->
-                    <form class="form w-lg-500px mx-auto" action="/pizza/result" method="post" novalidate="novalidate">
+                    <form class="form w-lg-500px mx-auto" action="/dev/result" method="post" novalidate="novalidate">
                         <!--begin::Group-->
                         <div class="mb-5">
                             <!--begin::Step Name-->
@@ -167,38 +167,39 @@
                                     ?>
 
 
-                                            <div class="btn btn-sm btn-outline me-4  position-relative" data-price="<?= $p_ing->price ?>">
+                                            <div class="btn btn-sm btn-outline me-4  position-relative" data-id="<?= $p_ing->id ?>" data-price="<?= $p_ing->price ?>">
                                                 <?php
                                                 echo $p_ing->name;
                                                 ?>
-                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="removeOldIngredient">
+                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger removeOldIngredient"">
                                                     X
                                                 </span>
                                             </div>
 
                                     <?php }
                                     } ?>
-                                    <div class="d-flex flex-row py-5">
-                                        <select class="form-select me-4" name="ingredients" id="categ">
-                                            <?php
-                                            foreach ($categories as $cat) {
-                                                if ($cat['id'] == 10 || $cat['id'] == 13) {
-                                                    continue;
-                                                }
-                                            ?>
-                                                <option value="<?= $cat['id']; ?>">
+                                    <div id="ing_supprimer"></div>
+                                    <div class=" d-flex flex-row py-5">
+                                                    <select class="form-select me-4" name="ingredients" id="categ">
+                                                        <?php
+                                                        foreach ($categories as $cat) {
+                                                            if ($cat['id'] == 10 || $cat['id'] == 13) {
+                                                                continue;
+                                                            }
+                                                        ?>
+                                                            <option value="<?= $cat['id']; ?>">
 
-                                                    <?= $cat['name']; ?>
-                                                </option>
-                                            <?php
-                                            }
-                                            ?>
-                                        </select>
-                                        <a href="#" class="btn btn-success " id="btn-add">Ajouter</a>
-                                    </div>
-                                    <div id="emplacement">
-                                    </div>
-                                    <!--end::Input-->
+                                                                <?= $cat['name']; ?>
+                                                            </option>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                    <a href="#" class="btn btn-success " id="btn-add">Ajouter</a>
+                                            </div>
+                                            <div id="emplacement">
+                                            </div>
+                                            <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
 
@@ -279,20 +280,25 @@
             $(this).data('old-price', selectedPrice)
 
         })
-        $(document).on('click', '#removeOldIngredient', function() {
+        $(document).on('click', '.removeOldIngredient', function() {
 
             var prix = parseFloat($(this).closest('.btn').data('price'))
             var ancienPrix = parseFloat($("#prixtotal").html())
 
+            var id_supprimer = $(this).closest('.btn').data('id')
+            $('#ing_supprimer').append(`<input type='hidden' value='${id_supprimer}' name='ing_suppr[]'>`)
             $(this).closest('.btn').remove();
             $("#prixtotal").html((ancienPrix - prix).toFixed(2))
         })
+
+
+
         $(document).on('click', '#removeIngredient', function() {
 
             var prix = parseFloat($(this).closest('.d-flex').find('select').find('option:selected').data('price'))
             var ancienPrix = parseFloat($("#prixtotal").html())
 
-            $(this).closest('.d-flex').remove();
+            $(this).closest('.d-flex').remove()
             $("#prixtotal").html((ancienPrix - prix).toFixed(2))
         })
         $("#btn-add").on('click', function(e) {

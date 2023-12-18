@@ -2,11 +2,11 @@
     <div class="card">
         <div class="card-header">
 
-                <h2 class="card-title">Liste des Pizza</h2>
-                <div class="card-toolbar">
+            <h2 class="card-title">Liste des Pizza</h2>
+            <div class="card-toolbar">
 
-                    <a href="/Pizza/edit/new" class="btn btn-primary">Nouvelle pizza</a>
-                </div>
+                <a href="/Pizza/edit/new" class="btn btn-primary">Nouvelle pizza</a>
+            </div>
         </div>
         <div class="card-body">
             <table id="allPizzaTable" class="table table-hover ">
@@ -26,52 +26,57 @@
         </div>
     </div>
 
-<div class="modal fade" tabindex="-1" id="modalPizza">
-    <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+    <div class="modal fade" tabindex="-1" id="modalPizza">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
 
-                <!--begin::Close-->
-                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                    </div>
+                    <!--end::Close-->
                 </div>
-                <!--end::Close-->
-            </div>
 
-            <div class="modal-body">
-                <p>Long modal body text goes here.</p>
-            </div>
+                <div class="modal-body">
+                    <p>Long modal body text goes here.</p>
+                </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
-</div>
 
 <script>
-
-
-$(document).on('click', '.view', function(e) {
-    var id = $(this).data('id')
-    $.ajax({
-        url: "/Pizza/AjaxPizzaContent",
-        type: "GET",
-        data: {
-            idPizza: id
-        },
-        success: function(data) {
-            var modal = new bootstrap.Modal(document.getElementById('modalPizza'))
-            modal.toggle()
-        },
-        error: function(hxr, status, error) {
-            console.log(error);
-        }
+    $(document).on('click', '.view', function(e) {
+        var id = $(this).data('id')
+        $.ajax({
+            url: "/Pizza/AjaxPizzaContent",
+            type: "GET",
+            data: {
+                idPizza: id
+            },
+            success: function(data) {
+                console.log()
+                var modal = new bootstrap.Modal(document.getElementById('modalPizza'))
+                modal.toggle()
+                $('.modal-title').html(data.pizza.name)
+                var content = `<h5>${data.pate.name}</h5><h5>${data.base.name}</h5><h5>Ingrédients</h5><ul>`
+                data.ingredients.forEach(d => {
+                    content += `<li>${d.name}</li>`
+                })
+                $('.modal-body').html(content + '</ul>')
+            },
+            error: function(hxr, status, error) {
+                console.log(error);
+            }
+        })
     })
-})
 
     $(document).ready(function() {
 
@@ -89,8 +94,7 @@ $(document).on('click', '.view', function(e) {
                 "url": "/Pizza/SearchPizza",
                 "type": "POST"
             },
-            "columns": [
-                {
+            "columns": [{
                     "data": "id"
                 },
                 {

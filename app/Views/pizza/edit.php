@@ -79,7 +79,7 @@
                 <!--begin::Content-->
                 <div class="flex-row-fluid">
                     <!--begin::Form-->
-                    <form class="form w-lg-500px mx-auto" action="/pizza/result" method="post" novalidate="novalidate">
+                    <form class="form w-lg-500px mx-auto" action="<?=!isset($pizza) ? '/pizza/result' : 'dev/test' ?>" method="post" novalidate="novalidate">
                         <!--begin::Group-->
                         <div class="mb-5">
                             <!--begin::Step Name-->
@@ -167,11 +167,11 @@
                                     ?>
 
 
-                                            <div class="btn btn-sm btn-outline me-4  position-relative">
+                                            <div class="btn btn-sm btn-outline me-4  position-relative" data-price="<?= $p_ing->price ?>">
                                                 <?php
                                                 echo $p_ing->name;
                                                 ?>
-                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="removeOldIngredient">
                                                     X
                                                 </span>
                                             </div>
@@ -216,7 +216,7 @@
                                 </div>
                                 <!--end::Wrapper-->
                                 <div>
-                                    <p class="fs-6">Prix de la pizza : <span id="prixtotal">0</span>€</p>
+                                    <p class="fs-6">Prix de la pizza : <span id="prixtotal"><?= !isset($old_price) ? 0 : $old_price ?></span>€</p>
                                 </div>
                                 <!--begin::Wrapper-->
                                 <div>
@@ -279,7 +279,14 @@
             $(this).data('old-price', selectedPrice)
 
         })
+        $(document).on('click', '#removeOldIngredient', function() {
 
+            var prix = parseFloat($(this).closest('.btn').data('price'))
+            var ancienPrix = parseFloat($("#prixtotal").html())
+
+            $(this).closest('.btn').remove();
+            $("#prixtotal").html((ancienPrix - prix).toFixed(2))
+        })
         $(document).on('click', '#removeIngredient', function() {
 
             var prix = parseFloat($(this).closest('.d-flex').find('select').find('option:selected').data('price'))

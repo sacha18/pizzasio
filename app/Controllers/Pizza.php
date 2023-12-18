@@ -43,6 +43,21 @@ class Pizza extends BaseController
             $composePizzaModel = model('ComposePizzaModel');
             $pizza_ing = $composePizzaModel->getIngredientByPizzaId($pizza['id']);
             $this->addBreadcrumb('Edition de ' . $pizza['name'], ['Pizza']);
+            $old_price = 0;
+
+            for ($i = 0; $i < sizeof($base); $i++) {
+                if ($base[$i]['id'] == $pizza['base']) {
+                    $old_price += $base[$i]['price'];
+                }
+            }
+            for ($i = 0; $i < sizeof($pate); $i++) {
+                if ($pate[$i]['id'] == $pizza['dough']) {
+                    $old_price += $pate[$i]['price'];
+                }
+            }
+            foreach ($pizza_ing as $ing) {
+                $old_price += $ing->price;
+            }
             return $this->view('/pizza/edit', [
                 'steps' => $steps,
                 'categories' => $categories,
@@ -50,14 +65,16 @@ class Pizza extends BaseController
                 'pate' => $pate,
                 'base' => $base,
                 'pizza' => $pizza,
-                'pizza_ing' => $pizza_ing
+                'pizza_ing' => $pizza_ing,
+                'old_price' => $old_price,
             ]);
         }
 
         return $this->redirect('Pizza');
     }
 
-    public function getAjaxPizzaContent() {
+    public function getAjaxPizzaContent()
+    {
         $pizzaModel = model('PizzaModel');
         $composePizzaModel = model('ComposePizzaModel');
         $ingredientModel = model('IngredientModel');
@@ -74,7 +91,6 @@ class Pizza extends BaseController
         $result['base'] = $base;
         $result['pate'] = $pate;
         return $this->response->setJSON($result);
-
     }
 
     public function postSearchPizza()

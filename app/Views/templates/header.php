@@ -15,8 +15,8 @@
            <!--begin::Mobile logo-->
            <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
              <a href="../../demo1/dist/index.html" class="d-lg-none">
-               <img alt="Logo" src="/assets/media/logos/default-small.svg" class="theme-light-show h-30px" />
-               <img alt="Logo" src="/assets/media/logos/default-small-dark.svg" class="theme-dark-show h-30px" />
+               <img alt="Logo" src="/assets/media/logos/PizzaSioFullLogo.svg" class="theme-light-show h-30px" />
+               <img alt="Logo" src="/assets/media/logos/PizzaSioFullLogo.svg" class="theme-dark-show h-30px" />
              </a>
            </div>
            <!--end::Mobile logo-->
@@ -27,12 +27,12 @@
                <!--begin::Menu-->
                <div class="menu menu-rounded menu-column menu-lg-row my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0" id="kt_app_header_menu" data-kt-menu="true">
 
-                <ol class="breadcrumb text-muted fs-6 fw-semibold">
-                  <li class="breadcrumb-item"><a href="/" class="">MyApp</a></li>
-                  <?php foreach ($breadcrumb as $bitem) { ?>
-                    <li class="breadcrumb-item"><a href="<?= $bitem['url'] ?>" class=""><?= $bitem['text'] ?></a></li>
-                  <?php } ?>
-                </ol>
+                 <ol class="breadcrumb text-muted fs-6 fw-semibold">
+                   <li class="breadcrumb-item"><a href="/" class="">Pizza SIO</a></li>
+                   <?php foreach ($breadcrumb as $bitem) { ?>
+                     <li class="breadcrumb-item"><a href="<?= $bitem['url'] ?>" class=""><?= $bitem['text'] ?></a></li>
+                   <?php } ?>
+                 </ol>
                </div>
                <!--end::Menu-->
              </div>
@@ -41,31 +41,11 @@
              <!--begin::Navbar-->
              <div class="app-navbar flex-shrink-0">
 
-                 
+
                <!--begin::Theme mode-->
 
                <div class="app-navbar-item ms-1 ms-lg-3">
 
-                 <!--begin::Menu toggle-->
-                 <a href="#" class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px" data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-                   <i class="ki-duotone ki-night-day theme-light-show fs-1">
-                     <span class="path1"></span>
-                     <span class="path2"></span>
-                     <span class="path3"></span>
-                     <span class="path4"></span>
-                     <span class="path5"></span>
-                     <span class="path6"></span>
-                     <span class="path7"></span>
-                     <span class="path8"></span>
-                     <span class="path9"></span>
-                     <span class="path10"></span>
-                   </i>
-                   <i class="ki-duotone ki-moon theme-dark-show fs-1">
-                     <span class="path1"></span>
-                     <span class="path2"></span>
-                   </i>
-                 </a>
-                 <!--begin::Menu toggle-->
                  <!--begin::Menu-->
                  <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-title-gray-700 menu-icon-gray-500 menu-active-bg menu-state-color fw-semibold py-4 fs-base w-150px" data-kt-menu="true" data-kt-element="theme-mode-menu">
                    <!--begin::Menu item-->
@@ -140,7 +120,7 @@
                        <!--begin::Username-->
                        <div class="d-flex flex-column">
                          <div class="fw-bold d-flex align-items-center fs-5">
-                          <?= $user->getUsername() ?>
+                           <?= $user->getUsername() ?>
                          </div>
                          <a href="#" class="fw-semibold text-muted text-hover-primary fs-7"><?= $user->getEmail() ?></a>
                        </div>

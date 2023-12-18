@@ -79,7 +79,7 @@
                 <!--begin::Content-->
                 <div class="flex-row-fluid">
                     <!--begin::Form-->
-                    <form class="form w-lg-500px mx-auto" action="<?=!isset($pizza) ? '/pizza/result' : 'dev/test' ?>" method="post" novalidate="novalidate">
+                    <form class="form w-lg-500px mx-auto" action="/pizza/result" method="post" novalidate="novalidate">
                         <!--begin::Group-->
                         <div class="mb-5">
                             <!--begin::Step Name-->

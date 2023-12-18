@@ -178,24 +178,25 @@
 
                                     <?php }
                                     } ?>
-                                    <div id="ing_supprimer"></div>
-                                    <div class=" d-flex flex-row py-5">
-                                                    <select class="form-select me-4" name="ingredients" id="categ">
-                                                        <?php
-                                                        foreach ($categories as $cat) {
-                                                            if ($cat['id'] == 10 || $cat['id'] == 13) {
-                                                                continue;
-                                                            }
-                                                        ?>
-                                                            <option value="<?= $cat['id']; ?>">
-
-                                                                <?= $cat['name']; ?>
-                                                            </option>
-                                                        <?php
+                                    <div id=" ing_supprimer">
+                                            </div>
+                                            <div class=" d-flex flex-row py-5">
+                                                <select class="form-select me-4" name="ingredients" id="categ">
+                                                    <?php
+                                                    foreach ($categories as $cat) {
+                                                        if ($cat['id'] == 10 || $cat['id'] == 13) {
+                                                            continue;
                                                         }
-                                                        ?>
-                                                    </select>
-                                                    <a href="#" class="btn btn-success " id="btn-add">Ajouter</a>
+                                                    ?>
+                                                        <option value="<?= $cat['id']; ?>">
+
+                                                            <?= $cat['name']; ?>
+                                                        </option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                                <a href="#" class="btn btn-success " id="btn-add">Ajouter</a>
                                             </div>
                                             <div id="emplacement">
                                             </div>

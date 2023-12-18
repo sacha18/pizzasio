@@ -97,8 +97,6 @@
     <div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
         <hr />
         <div class="text-center text-gray-600">Version : <?= $version = getenv('APP_VERSION') !== false ? getenv('APP_VERSION') : 'dev'; ?>
-        <br><img class="mx-auto w-50px"
-                 src="/assets/media/logos/dokimedia.png" alt=""/>
         </div>
     </div>
     <!--end::Footer-->

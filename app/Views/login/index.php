@@ -81,7 +81,7 @@
                 <!--begin::Content-->
                 <div class="d-flex flex-column flex-center p-6 p-lg-10 w-100">
                     <!--begin::Image-->
-                    <img class="d-lg-block mx-auto w-100px w-lg-100 w-xl-100 mb-10 mb-lg-20" src="/assets/media/logos/PizzaSioFullLogoWhite.svg" alt="" />
+                    <img class="d-lg-block mx-auto w-100px w-lg-100 w-xl-100" src="/assets/media/logos/PizzaSioFullLogoWhite.svg" alt="" />
                     <!--end::Image-->
                 </div>
                 <!--end::Content-->

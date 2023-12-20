@@ -31,13 +31,13 @@
             <div class="mb-3 row">
                 <label for="name" class="col-sm-2 col-form-label">Catégorie</label>
                 <div class="col-sm-10">
-                    <input id="name" required type="text" class="form-control" name="name" value="<?= isset($cat) ? $cat['name'] : ''; ?>">
+                    <input for="name" required type="text" class="form-control" name="name" value="<?= isset($cat) ? $cat['name'] : ''; ?>">
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="icon" class="col-sm-2 col-form-label">icon</label>
                 <div class="col-sm-10">
-                    <input id="icon" required type="text" class="form-control" name="icon" value="<?= isset($cat) ? $cat['icon'] : ''; ?>">
+                    <input for="icon" required type="text" class="form-control" name="icon" value="<?= isset($cat) ? $cat['icon'] : ''; ?>">
                 </div>
             </div>
             <div class="mb-3 row">

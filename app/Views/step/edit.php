@@ -15,7 +15,7 @@
                         data-bs-title="Supprimer l'étape"
                         text-swal2="Voulez-vous vraiment supprimé l'étape <?php $step['name']; ?>"
                         >
-                            <i class="fa-solid fa-user-slash">
+                            <i class="fa-solid fa-trash">
                               
                             </i>
                         </a>

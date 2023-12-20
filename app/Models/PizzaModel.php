@@ -42,6 +42,17 @@ class PizzaModel extends Model
         }
     }
 
+    public function deletePizzaDoughOrBase($data)
+    {
+        $builder = $this->db->table($this->table);
+        if (isset($data['dough_suppr'])) $builder->set('dough', null);
+        if (isset($data['base_suppr'])) $builder->set('base', null);
+        if (isset($data['id'])) {
+            $builder->where('id', $data['id']);
+            $builder->update();
+        }
+    }
+
     public function getPizzaById($id) {
         return $this->find($id);
     }

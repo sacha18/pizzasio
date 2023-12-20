@@ -18,8 +18,16 @@ class ComposePizzaModel extends Model
         $builder->insertBatch($data);
     }
 
-    public function updatePizzaIngredient($data)
+    public function deletePizzaIngredients($data)
     {
+        $builder = $this->db->table($this->table);
+        foreach ($data['ing_suppr'] as $delId) {
+            $builder
+                ->where('id_pizza', $data['id'])
+                ->where('id_ingredient', $delId)
+                ->limit(1)
+                ->delete();
+        }
     }
 
     public function getIngredientByPizzaId($id_pizza)

@@ -145,6 +145,30 @@ class Pizza extends BaseController
         return $this->redirect('Pizza');
     }
 
+    public function postEditedResult()
+    {
+        $data = $this->request->getPost();
+        $pizzaModel = model('PizzaModel');
+        $composePizzaModel = model('ComposePizzaModel');
+
+        if (isset($data['dough_suppr']) || isset($data['base_suppr'])) {
+            $pizzaModel->deletePizzaDoughOrBase($data);
+        }
+        if (isset($data['ing_suppr'])) {
+            $composePizzaModel->deletePizzaIngredients($data);
+        }
+        if (isset($data['dough']) || isset($data['base'])) {
+            $pizzaModel->updatePizza($data);
+        }
+        if (isset($data['ingredients'])) {
+            $data_ing = array();
+            foreach ($data['ingredients'] as $ing) {
+                $data_ing[] = ['id_pizza' => (int) $data['id'], 'id_ingredient' => (int) $ing];
+            }
+            $composePizzaModel->insertPizzaIngredients($data_ing);
+        }
+    }
+
 
     public function getAjaxIngredients()
     {

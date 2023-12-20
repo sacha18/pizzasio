@@ -118,7 +118,6 @@
                                 </div>
                             </div>
                             <div id="ing_supprimer">
-
                             </div>
                     </form>
                 </div>

@@ -110,7 +110,7 @@
                     "data": 'id',
                     "sortable": false,
                     "render": function(data, type, row) {
-                        return `<i class="fa-solid fa-eye me-4 view" data-id="${row.id}"></i>.`;
+                        return `<i class="fa-solid fa-eye me-4 view" data-id="${row.id}"></i>`;
                     }
                 },
                 {

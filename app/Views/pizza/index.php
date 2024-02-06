@@ -66,6 +66,7 @@
                 var modal = new bootstrap.Modal(document.getElementById('modalPizza'))
                 modal.toggle()
                 $('.modal-title').html(data.pizza.name)
+                console.log(data);
                 var content = `<h5>${data.pate.name}</h5><h5>${data.base.name}</h5><h5>Ingrédients</h5><ul>`
                 data.ingredients.forEach(d => {
                     content += `<li>${d.name}</li>`

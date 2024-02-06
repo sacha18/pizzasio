@@ -43,18 +43,8 @@ class Pizza extends BaseController
             $composePizzaModel = model('ComposePizzaModel');
             $pizza_ing = $composePizzaModel->getIngredientByPizzaId($pizza['id']);
             $this->addBreadcrumb('Edition de ' . $pizza['name'], ['Pizza']);
-            $old_price = 0;
+            $old_price = 7;
 
-            for ($i = 0; $i < sizeof($base); $i++) {
-                if ($base[$i]['id'] == $pizza['base']) {
-                    $old_price += $base[$i]['price'];
-                }
-            }
-            for ($i = 0; $i < sizeof($pate); $i++) {
-                if ($pate[$i]['id'] == $pizza['dough']) {
-                    $old_price += $pate[$i]['price'];
-                }
-            }
             foreach ($pizza_ing as $ing) {
                 $old_price += $ing->price;
             }
@@ -141,8 +131,9 @@ class Pizza extends BaseController
         foreach ($data['ingredients'] as $ing) {
             $data_ing[] = ['id_pizza' => (int) $id, 'id_ingredient' => (int) $ing];
         }
+        $data_ing[] = ['id_pizza' => (int) $id, 'id_ingredient' => (int) $data['base']];
+        $data_ing[] = ['id_pizza' => (int) $id, 'id_ingredient' => (int) $data['pate']];
         $composePizzaModel->insertPizzaIngredients($data_ing);
-        return $this->redirect('Pizza');
     }
 
     public function postEditedResult()

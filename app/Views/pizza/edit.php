@@ -323,7 +323,7 @@
                                     <?php } ?>
                                     <!--end::Wrapper-->
                                     <div>
-                                        <p class="fs-6">Prix de la pizza : <span id="prixtotal"><?= 0 ?></span>€</p>
+                                        <p class="fs-6">Prix de la pizza : <span id="prixtotal"><?= 7 ?></span>€</p>
                                     </div>
                                     <!--begin::Wrapper-->
                                     <div>

@@ -1,77 +1,77 @@
 # Menus
 accueil:
    title: Accueil
-   url: /
+   url: <?= site_url('/') ?>
    perm: none
    icon: '<i class="nav-icon fas fa-home"></i>'
    class: main-menu-accueil
 
 etape:
   title: Étape
-  url: /Step
+  url: <?= site_url('/Step') ?>
   icon: '<i class="nav-icon fas fa-list-ol"></i>'
   subs:
     create-etape:
       title: Création d'étape
-      url: /Step/edit/new
+      url: <?= site_url('/Step/edit/new') ?>
       icon: '<i class="fas fa-plus"></i>'
     gerer-etape:
       title: Gérer les étapes
-      url: /Step
+      url: <?= site_url('/Step') ?>
       icon: '<i class="nav-icon fas fa-list-ol"></i>'
 
 categorie:
   title: Catégorie
-  url: /Category
+  url: <?= site_url('/Category') ?>
   icon: '<i class="nav-icon fas fa-folder"></i>'
   subs:
     create-categorie:
       title: Création de catégorie
-      url: /Category/edit/new
+      url: <?= site_url('/Category/edit/new') ?>
       icon: '<i class="fas fa-folder-plus"></i>'
     gerer-categorie:
       title: Gérer les catégories
-      url: /Category
+      url: <?= site_url('/Category') ?>
       icon: '<i class="nav-icon fas fa-folder"></i>'
 
 ingredient:
   title: Ingrédients
-  url: /Ingredient
+  url: <?= site_url('/Ingredient') ?>
   icon: '<i class="nav-icon fas fa-utensils"></i>'
   subs:
     create-ingredient:
       title: Création d'ingrédient
-      url: /Ingredient/edit/new
+      url: <?= site_url('/Ingredient/edit/new') ?>
       icon: '<i class="nav-icon fas fa-circle-plus "></i>'
     gerer-ingredient:
       title: Gérer les ingrédients
-      url: /Ingredient
+      url: <?= site_url('/Ingredient') ?>
       icon: '<i class="nav-icon fas fa-utensils"></i>'
 
 pizza:
   title: Pizza
-  url: /Pizza
+  url: <?= site_url('/Pizza') ?>
   icon: '<i class="nav-icon fas fa-pizza-slice"></i>'
   subs:
     create-pizza:
       title: Création de pizza
-      url: /Pizza/edit/new
+      url: <?= site_url('/Pizza/edit/new') ?>
       icon: '<i class="nav-icon fas fa-circle-plus "></i>'
     gerer-pizza:
       title: Gérer les pizzas
-      url: /Pizza
+      url: <?= site_url('/Pizza') ?>
       icon: '<i class="nav-icon fas fa-pizza-slice"></i>'
 
 admin:
   title: Utilisateurs
-  url: /Users
+  url: <?= site_url('/Users') ?>
   icon: '<i class="nav-icon fas fa-gears"></i>'
   subs:
     users:
       title: Création d'utilisateur
-      url: /Users/edit/new
+      url: <?= site_url('/Users/edit/new') ?>
       icon: '<i class="nav-icon fas fa-users-gear"></i>'
     gerer-users:
       title: Gérer les utilisateurs
-      url: /Users
+      url: <?= site_url('/Users') ?>
       icon: '<i class="nav-icon fas fa-users"></i>'

@@ -21,7 +21,7 @@ use Psr\Log\LoggerInterface;
  */
 abstract class BaseController extends Controller
 {
-     /**
+    /**
      * Instance of the main Request object.
      *
      * @var CLIRequest|IncomingRequest
@@ -89,7 +89,7 @@ abstract class BaseController extends Controller
 
     protected function menus()
     {
-        if (! $this->menus) {
+        if (!$this->menus) {
             $this->menus = yaml_parse_file(APPPATH . 'Menus/main.yaml');
         }
 
@@ -99,40 +99,36 @@ abstract class BaseController extends Controller
     /**
      * Constructor.
      */
-    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
-    {
+    public function initController(
+        RequestInterface $request,
+        ResponseInterface $response,
+        LoggerInterface $logger
+    ) {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
         $this->session = \Config\Services::session();
-        $this->router  = service('router');
-        /* @phpstan-ignore-next-line */
-        if (! $request->isCLI()) {
-            if ($this->acl && ! ($this->router->methodName() === $this->acl_dmz)) {
+        $this->router = service('router');
+        if (!$request->isCLI()) {
+            if ($this->acl && !($this->router->methodName() === $this->acl_dmz)) {
                 /** @var User $user */
                 $user = session()->get('user');
                 if ($user === null) {
-                    $this->redirect('/Login?backto=' . $_SERVER['REQUEST_URI']);
-
-                    exit(); /** @phpstan-ignore-line */
+                    $this->redirect('/Login');
+                    exit();
                 }
-                //$this->session->user = model('UserModel')->find($user->id);
-                if (! $user->getActive()) {
+                if (!$user->getActive()) {
                     $this->session = null;
-                    $this->redirect('/Login?backto=' . $_SERVER['REQUEST_URI']);
-
-                    exit(); /** @phpstan-ignore-line */
+                    $this->redirect('/Login');
+                    exit();
                 }
             }
-
             if (session()->has('messages')) {
                 $this->messages = session()->get('messages');
                 session()->remove('messages');
             }
         }
-        // $this->current_tabmenus = $this->router->methodName();
-        // Preload any models, libraries, etc, here.
-        // E.g.: $this->session = \Config\Services::session();
     }
+
 
     /**
      * Redirection
@@ -143,16 +139,15 @@ abstract class BaseController extends Controller
     public function redirect()
     {
         $url = implode('/', func_get_args());
-        if (substr($url, 0, 4) !== 'http' && substr($url, 0, 1) !== '/') {
-            $url = '/' . $url;
-        }
+        $URL = base_url($url); // Utiliser base_url pour inclure le sous-dossier
         header("Location: {$url}");
         if (count($this->messages) > 0) {
             session()->set('messages', $this->messages);
         }
-
-        exit; /** @phpstan-ignore-line */
+        exit;
+        /** @phpstan-ignore-line */
     }
+
 
     /**
      * View
@@ -178,7 +173,8 @@ abstract class BaseController extends Controller
                     '%s : %s',
                     $this->title,
                     $this->title_prefix
-                )]
+                )
+            ]
         )
             . (($vue !== null) ? view($vue, $datas) : '')
             . view('templates/footer', ['messages' => $this->messages]);
@@ -194,7 +190,8 @@ abstract class BaseController extends Controller
 
             if (method_exists($this, $func)) {
                 return call_user_func([$this, $func]);
-            }  log_message('debug', 'Action non reconnue :' . $action);
+            }
+            log_message('debug', 'Action non reconnue :' . $action);
         }
 
         return $this->ajax_error('Method not found', 405);

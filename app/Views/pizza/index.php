@@ -5,7 +5,7 @@
             <h2 class="card-title">Liste des Pizza</h2>
             <div class="card-toolbar">
 
-                <a href="/Pizza/edit/new" class="btn btn-primary">Nouvelle pizza</a>
+                <a href="<?= site_url('/Pizza/edit/new') ?>" class="btn btn-primary">Nouvelle pizza</a>
             </div>
         </div>
         <div class="card-body">
@@ -56,7 +56,7 @@
     $(document).on('click', '.view', function(e) {
         var id = $(this).data('id')
         $.ajax({
-            url: "/Pizza/AjaxPizzaContent",
+            url: "<?= site_url('/Pizza/AjaxPizzaContent') ?>",
             type: "GET",
             data: {
                 idPizza: id
@@ -91,7 +91,7 @@
             "serverSide": true,
             "pageLength": 50,
             "ajax": {
-                "url": "/Pizza/SearchPizza",
+                "url": "<?= site_url('/Pizza/SearchPizza') ?>",
                 "type": "POST"
             },
             "columns": [{
@@ -117,7 +117,7 @@
                     "data": 'id',
                     "sortable": false,
                     "render": function(data, type, row) {
-                        return `<a href="/Pizza/edit/${row.id}"><i class="fa-solid fa-pencil me-4"></i>Éditer</a>`;
+                        return `<a href="<?= site_url('/Pizza/edit/') ?>${row.id}"><i class="fa-solid fa-pencil me-4"></i>Éditer</a>`;
                     }
                 },
 

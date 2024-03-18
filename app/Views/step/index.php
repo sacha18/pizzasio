@@ -1,12 +1,10 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-
-                <h2 class="card-title">Liste des Étapes</h2>
-                <div class="card-toolbar">
-
-                    <a href="/Step/edit/new" class="btn btn-primary">Nouvelle étape</a>
-                </div>
+            <h2 class="card-title">Liste des Étapes</h2>
+            <div class="card-toolbar">
+                <a href="<?= site_url('/Step/edit/new') ?>" class="btn btn-primary">Nouvelle étape</a>
+            </div>
         </div>
         <div class="card-body">
             <table id="allStepTable" class="table table-hover ">
@@ -36,11 +34,10 @@
             "serverSide": true,
             "pageLength": 50,
             "ajax": {
-                "url": "/Step/SearchStep",
+                "url": "<?= site_url('/Step/SearchStep') ?>",
                 "type": "POST"
             },
-            "columns": [
-                {
+            "columns": [{
                     "data": "id"
                 },
                 {
@@ -53,19 +50,13 @@
                     "data": 'id',
                     "sortable": false,
                     "render": function(data, type, row) {
-                        return `<a href="/Step/edit/${row.id}"><i class="fa-solid fa-pencil me-4"></i>Éditer</a>`;
+                        return `<a href="<?= site_url('/Step/edit/') ?>${row.id}"><i class="fa-solid fa-pencil me-4"></i>Éditer</a>`;
                     }
                 },
-
             ],
-
-
             "order": [
                 [0, "asc"]
-
             ]
-
         });
-
     });
 </script>

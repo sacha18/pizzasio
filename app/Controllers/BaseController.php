@@ -139,7 +139,7 @@ abstract class BaseController extends Controller
     public function redirect()
     {
         $url = implode('/', func_get_args());
-        $URL = base_url($url); // Utiliser base_url pour inclure le sous-dossier
+        $url = base_url($url); // Utiliser base_url pour inclure le sous-dossier
         header("Location: {$url}");
         if (count($this->messages) > 0) {
             session()->set('messages', $this->messages);

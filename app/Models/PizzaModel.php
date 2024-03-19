@@ -82,6 +82,12 @@ class PizzaModel extends Model
         return $this->builder()->countAllResults();
     }
 
+    public function getAllPizza()
+    {
+        $builder = $this->builder();
+        return $builder->get()->getResultArray();
+    }
+
     public function getFilteredPizza($searchValue)
     {
         $builder = $this->builder();

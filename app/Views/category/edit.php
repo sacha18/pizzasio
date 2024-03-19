@@ -15,56 +15,57 @@
                             </i>
                         </a>
                     </div>
-            </div>
 
-        <?php
+                <?php
                 }
-        ?>
-        <div class="card-body">
-            <?php
-            if (isset($cat)) {
-            ?>
-                <input type="hidden" name="id" value="<?= $cat['id'] ?>" />
-            <?php
-            }
-            ?>
-            <div class="mb-3 row">
-                <label for="name" class="col-sm-2 col-form-label">Catégorie</label>
-                <div class="col-sm-10">
-                    <input for="name" required type="text" class="form-control" name="name" value="<?= isset($cat) ? $cat['name'] : ''; ?>">
-                </div>
+                ?>
             </div>
-            <div class="mb-3 row">
-                <label for="icon" class="col-sm-2 col-form-label">icon</label>
-                <div class="col-sm-10">
-                    <input for="icon" required type="text" class="form-control" name="icon" value="<?= isset($cat) ? $cat['icon'] : ''; ?>">
+            <div class="card-body">
+                <?php
+                if (isset($cat)) {
+                ?>
+                    <input type="hidden" name="id" value="<?= $cat['id'] ?>" />
+                <?php
+                }
+                ?>
+                <div class="mb-3 row">
+                    <label for="name" class="col-sm-2 col-form-label">Catégorie</label>
+                    <div class="col-sm-10">
+                        <input for="name" required type="text" class="form-control" name="name" value="<?= isset($cat) ? $cat['name'] : ''; ?>">
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="step" class="col-sm-2 col-form-label">Étape</label>
-                <div class="col-sm-10">
-                    <select class="form-select" name="step">
-                        <?php
-                        if (isset($step)) {
-                            foreach ($steps as $step) {
-                        ?>
-                                <option value="<?= $step['id']; ?>">
-                                    <?=
-                                    (isset($step) && $step['name'] == $step['id'])  ?
+                <div class="mb-3 row">
+                    <label for="icon" class="col-sm-2 col-form-label">icon</label>
+                    <div class="col-sm-10">
+                        <input for="icon" required type="text" class="form-control" name="icon" value="<?= isset($cat) ? $cat['icon'] : ''; ?>">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="step" class="col-sm-2 col-form-label">Étape</label>
+                    <div class="col-sm-10">
+                        <select class="form-select" name="step">
+                            <?php
+                            if (isset($steps)) {
+                                foreach ($steps as $step) {
+                            ?>
+                                    <option value="<?= $step['id']; ?>">
+                                        <?=
+                                        (isset($step) && $step['name'] == $step['id'])  ?
 
-                                        'selected' : '';
-                                    ?>
-                                    <?= $step['name']; ?>
-                                </option>
-                        <?php
+                                            'selected' : '';
+                                        ?>
+                                        <?= $step['name']; ?>
+                                    </option>
+                            <?php
+                                }
                             }
-                        }
-                        ?>
-                    </select>
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" name="type" value="<?= isset($cat)  ? 'update' : 'insert' ?>" class="btn btn-primary">Valider</button>
                 </div>
             </div>
-        </div>
-        <div class="card-footer">
-            <button type="submit" name="type" value="<?= isset($cat)  ? 'update' : 'insert' ?>" class="btn btn-primary">Valider</button>
-        </div>
+
 </form>

@@ -1,4 +1,3 @@
-# Menus
 accueil:
    title: Accueil
    url: /
@@ -63,10 +62,14 @@ pizza:
       icon: '<i class="nav-icon fas fa-pizza-slice"></i>'
 
 admin:
-  title: Utilisateurs
+  title: Administration
   url: /Users
   icon: '<i class="nav-icon fas fa-gears"></i>'
   subs:
+    api:
+      title: API
+      url: /Api
+      icon: <i class="fa-solid fa-link"></i>
     users:
       title: Création d'utilisateur
       url: /Users/edit/new

@@ -211,7 +211,7 @@ abstract class BaseController extends Controller
      * @param mixed      $datas
      * @param mixed|null $statusCode
      */
-    protected function json($datas, $statusCode = Response::HTTP_OK)
+    protected function json($datas, $statusCode = ResponseInterface::HTTP_OK)
     {
         $response = response();
 

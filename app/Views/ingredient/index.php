@@ -1,12 +1,10 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-
-                <h2 class="card-title">Liste des Ingredients</h2>
-                <div class="card-toolbar">
-
-                    <a href="/Ingredient/edit/new" class="btn btn-primary">Nouvel Ingredient</a>
-                </div>
+            <h2 class="card-title">Liste des Ingredients</h2>
+            <div class="card-toolbar">
+                <a href="<?= site_url('/Ingredient/edit/new') ?>" class="btn btn-primary">Nouvel Ingredient</a>
+            </div>
         </div>
         <div class="card-body">
             <table id="allIngredientTable" class="table table-hover ">
@@ -40,7 +38,7 @@
             "serverSide": true,
             "pageLength": 50,
             "ajax": {
-                "url": "/Ingredient/SearchIngredient",
+                "url": "<?= site_url('/Ingredient/SearchIngredient') ?>",
                 "type": "POST"
             },
             "columns": [
@@ -76,7 +74,7 @@
                     "data": 'id',
                     "sortable": false,
                     "render": function(data, type, row) {
-                        return `<a href="/Ingredient/edit/${row.id}"><i class="fa-solid fa-pencil me-4"></i>Éditer</a>`;
+                        return `<a href="<?= site_url('/Ingredient/edit/') ?>${row.id}"><i class="fa-solid fa-pencil me-4"></i>Éditer</a>`;
                     }
                 },
 
@@ -89,10 +87,7 @@
             ],
             "order": [
                 [0, "asc"]
-
             ]
-
         });
-
     });
 </script>

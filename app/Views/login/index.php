@@ -14,16 +14,16 @@
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/media/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/media/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/media/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/assets/media/favicons/site.webmanifest">
-    <link rel="mask-icon" href="/assets/media/favicons/safari-pinned-tab.svg" color="#30788d">
-    <link rel="shortcut icon" href="/assets/media/favicons/favicon.ico">
-    <link rel="icon" type="image/svg+xml" href="/assets/media/favicons/favicon.svg">
-    <link rel="icon" type="image/png" href="/assets/media/favicons/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= site_url('/assets/media/favicons/apple-touch-icon.png') ?>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= site_url('/assets/media/favicons/favicon-32x32.png') ?>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= site_url('/assets/media/favicons/favicon-16x16.png') ?>">
+    <link rel="manifest" href="<?= site_url('/assets/media/favicons/site.webmanifest') ?>">
+    <link rel="mask-icon" href="<?= site_url('/assets/media/favicons/safari-pinned-tab.svg') ?>" color="#30788d">
+    <link rel="shortcut icon" href="<?= site_url('/assets/media/favicons/favicon.ico') ?>">
+    <link rel="icon" type="image/svg+xml" href="<?= site_url('/assets/media/favicons/favicon.svg') ?>">
+    <link rel="icon" type="image/png" href="<?= site_url('/assets/media/favicons/favicon.png') ?>">
     <meta name="msapplication-TileColor" content="#603cba">
-    <meta name="msapplication-config" content="/assets/media/favicons/browserconfig.xml">
+    <meta name="msapplication-config" content="<?= site_url('/assets/media/favicons/browserconfig.xml') ?>">
     <meta name="theme-color" content="#ffffff">
 
 
@@ -31,8 +31,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <!--end::Fonts-->
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-    <link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="<?= site_url('/assets/plugins/global/plugins.bundle.css') ?>" rel="stylesheet" type="text/css" />
+    <link href="<?= site_url('/assets/css/style.bundle.css') ?>" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
     <script>
         // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
@@ -40,13 +40,13 @@
 
     <!--begin::Javascript-->
     <script>
-        var hostUrl = "/assets/";
+        var hostUrl = "<?= site_url('/assets/') ?>";
     </script>
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-    <script src="/assets/plugins/global/plugins.bundle.js"></script>
-    <script src="/assets/js/scripts.bundle.js"></script>
+    <script src="<?= site_url('/assets/plugins/global/plugins.bundle.js') ?>"></script>
+    <script src="<?= site_url('/assets/js/scripts.bundle.js') ?>"></script>
     <!--end::Global Javascript Bundle-->
-    <script src="/assets/js/pim.js"></script>
+    <script src="<?= site_url('/assets/js/pim.js') ?>"></script>
     <!--end::Javascript-->
 
 </head>
@@ -81,7 +81,7 @@
                 <!--begin::Content-->
                 <div class="d-flex flex-column flex-center p-6 p-lg-10 w-100">
                     <!--begin::Image-->
-                    <img class="d-lg-block mx-auto w-100px w-lg-100 w-xl-100" src="/assets/media/logos/PizzaSioFullLogoWhite.svg" alt="" />
+                    <img class="d-lg-block mx-auto w-100px w-lg-100 w-xl-100" src="<?= site_url('/assets/media/logos/PizzaSioFullLogoWhite.svg') ?>" alt="" />
                     <!--end::Image-->
                 </div>
                 <!--end::Content-->

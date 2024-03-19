@@ -1,16 +1,11 @@
 <a href="#" class="btn btn-primary" id="btn-add">Ajouter</a>
-<form action="/dev/result" method="post">
-    <select class="form-select " name="" id="categ">
-        <?php
-        foreach ($categories as $cat) {
-        ?>
+<form action="<?= site_url('/dev/result') ?>" method="post">
+    <select class="form-select" name="categ" id="categ">
+        <?php foreach ($categories as $cat) { ?>
             <option value="<?= $cat['id']; ?>">
-
                 <?= $cat['name']; ?>
             </option>
-        <?php
-        }
-        ?>
+        <?php } ?>
     </select>
     <input type="text" name="" id="">
     <div id="emplacement">
@@ -22,29 +17,27 @@
 <script>
     $(document).ready(function() {
         $("#btn-add").on('click', function() {
-            const id_categ = $("#categ").val()
+            const id_categ = $("#categ").val();
             $.ajax({
-                url: '/Dev/AjaxIngredients',
+                url: '<?= site_url('/Dev/AjaxIngredients') ?>',
                 type: 'GET',
                 data: {
                     idCateg: id_categ
                 },
                 success: function(data) {
-                    let select = `<select class="form-select" name="ingredients[]">`
+                    let select = `<select class="form-select" name="ingredients[]">`;
 
                     data.forEach(ing => {
-                        var option = "<option value='" + ing.id + "'>" + ing.name + "</option>"
-                        select += option
-                    })
-                    select += "</select>"
-                    $("#emplacement").append(select)
-
+                        var option = "<option value='" + ing.id + "'>" + ing.name + "</option>";
+                        select += option;
+                    });
+                    select += "</select>";
+                    $("#emplacement").append(select);
                 },
-                error: function(hxr, status, error) {
+                error: function(xhr, status, error) {
                     console.log(error);
                 }
-            })
-
-        })
-    })
+            });
+        });
+    });
 </script>

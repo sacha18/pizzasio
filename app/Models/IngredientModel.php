@@ -20,14 +20,18 @@ class IngredientModel extends Model
         return $this->find($id);
     }
 
+    public function getIngredientNameById($id)
+    {
+        $this->find($id);
+        return $this->name;
+    }
 
     public function getAllIngredient()
     {
-
         $builder = $this->builder();
         return $builder->get()->getResultArray();
     }
-    
+
 
     public function getIngredientByIdCategory($id_category)
     {

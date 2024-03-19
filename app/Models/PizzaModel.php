@@ -88,6 +88,15 @@ class PizzaModel extends Model
         return $builder->get()->getResultArray();
     }
 
+    public function getAllPizzaWithName()
+    {
+        $builder =  $this->builder();
+        $builder->select('pizza.*, base.name AS base, dough.name AS dough');
+        $builder->join('ingredient AS base', 'base.id = pizza.base', 'left');
+        $builder->join('ingredient AS dough', 'dough.id = pizza.dough', 'left');
+        return $builder->get()->getResultArray();
+    }
+
     public function getFilteredPizza($searchValue)
     {
         $builder = $this->builder();

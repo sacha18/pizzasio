@@ -33,7 +33,7 @@ class Step extends BaseController
 
     public function postSearchStep()
     {
-        $stepModel = model('stepModel');
+        $stepModel = model('StepModel');
 
         // Paramètres de pagination et de recherche envoyés par DataTables
         $draw        = $this->request->getPost('draw');

@@ -1,11 +1,9 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-
             <h2 class="card-title">Liste des Pizza</h2>
             <div class="card-toolbar">
-
-                <a href="/Pizza/edit/new" class="btn btn-primary">Nouvelle pizza</a>
+                <a href="<?= site_url('/Pizza/edit/new') ?>" class="btn btn-primary">Nouvelle pizza</a>
             </div>
         </div>
         <div class="card-body">
@@ -31,7 +29,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Modal title</h5>
-
                     <!--begin::Close-->
                     <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                         <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
@@ -56,7 +53,7 @@
     $(document).on('click', '.view', function(e) {
         var id = $(this).data('id')
         $.ajax({
-            url: "/Pizza/AjaxPizzaContent",
+            url: "<?= site_url('/Pizza/AjaxPizzaContent') ?>",
             type: "GET",
             data: {
                 idPizza: id
@@ -80,9 +77,6 @@
     })
 
     $(document).ready(function() {
-
-
-
         var dataTable = $('#allPizzaTable').DataTable({
             "language": {
                 "url": '//cdn.datatables.net/plug-ins/1.13.4/i18n/fr-FR.json',
@@ -92,7 +86,7 @@
             "serverSide": true,
             "pageLength": 50,
             "ajax": {
-                "url": "/Pizza/SearchPizza",
+                "url": "<?= site_url('/Pizza/SearchPizza') ?>",
                 "type": "POST"
             },
             "columns": [{
@@ -118,19 +112,13 @@
                     "data": 'id',
                     "sortable": false,
                     "render": function(data, type, row) {
-                        return `<a href="/Pizza/edit/${row.id}"><i class="fa-solid fa-pencil me-4"></i>Éditer</a>`;
+                        return `<a href="<?= site_url('/Pizza/edit/') ?>${row.id}"><i class="fa-solid fa-pencil me-4"></i>Éditer</a>`;
                     }
                 },
-
             ],
-
-
             "order": [
                 [0, "asc"]
-
             ]
-
         });
-
     });
 </script>

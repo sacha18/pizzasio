@@ -37,7 +37,7 @@ class Category extends BaseController
 
     public function postSearchCategory()
     {
-        $categoryModel = model('categoryModel');
+        $categoryModel = model('CategoryModel');
 
         // Paramètres de pagination et de recherche envoyés par DataTables
         $draw        = $this->request->getPost('draw');
@@ -75,7 +75,7 @@ class Category extends BaseController
 
     public function postSave()
     {
-        $categoryModel = model('categoryModel');
+        $categoryModel = model('CategoryModel');
         $data = $this->request->getPost();
         $id = (isset($data['id'])) ? $data['id'] : null;
         $id_step = (isset($data['id_step'])) ? $data['id_step'] : 3;
@@ -99,7 +99,7 @@ class Category extends BaseController
     public function getDelete()
     {
         $id = $this->request->getGet('id');
-        $categoryModel = model('categoryModel');
+        $categoryModel = model('CategoryModel');
         $categoryModel->deleteCategory($id);
         $this->success("La catégorie a bien été supprimé");
         return $this->redirect('Category');

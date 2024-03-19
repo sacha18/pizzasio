@@ -1,11 +1,11 @@
 </div>
-    </main>
-      <!--begin::Page loading(append to body)-->
-      <div class="page-loader flex-column bg-dark bg-opacity-25">
-          <span class="spinner-border text-primary" role="status"></span>
-          <span class="text-muted fs-6 fw-semibold mt-5">Traitement en cours...</span>
-      </div>
-      <!--end::Page loading-->
+</main>
+<!--begin::Page loading(append to body)-->
+<div class="page-loader flex-column bg-dark bg-opacity-25">
+    <span class="spinner-border text-primary" role="status"></span>
+    <span class="text-muted fs-6 fw-semibold mt-5">Traitement en cours...</span>
+</div>
+<!--end::Page loading-->
 <?php if (isset($messages)) { ?>
     <script type="text/javascript">
         jQuery(function(){
@@ -39,5 +39,5 @@
         });
     </script>
 <?php } ?>
-  </body>
+</body>
 </html>

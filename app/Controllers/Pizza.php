@@ -85,7 +85,7 @@ class Pizza extends BaseController
 
     public function postSearchPizza()
     {
-        $pizzaModel = model('pizzaModel');
+        $pizzaModel = model('PizzaModel');
 
         // Paramètres de pagination et de recherche envoyés par DataTables
         $draw        = $this->request->getPost('draw');

@@ -6,7 +6,7 @@ class Dev extends BaseController
 {
     public function getIndex()
     {
-        $categoryModel = model('categoryModel');
+        $categoryModel = model('CategoryModel');
         $categories = $categoryModel->getCategoryByIdStep(5);
         return $this->view('/dev/index', ['categories' => $categories]);
     }

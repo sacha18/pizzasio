@@ -19,12 +19,12 @@ class Database extends Config
      * Lets you choose which connection group to
      * use if no other is specified.
      */
-    public string $defaultGroup = 'default';
+    public string $defaultGroup = ENVIRONMENT;
 
     /**
      * The default database connection.
      */
-    public array $default = [
+    public array $development = [
         'DSN'          => '',
         'hostname'     => 'localhost',
         'username'     => 'root',

@@ -20,6 +20,15 @@ class Api extends BaseController
         return $this->json($allPiza);
     }
 
+    public function postMakeCommande()
+    {
+        $idUrl = (int)$this->request->getVar('id');
+
+        $c = json_decode($this->request->getBody());
+        $commandeModel = model('CommandeModel');
+        $commandeModel->insertCommande($c);
+            return $this->json($c);
+    }
     public function getPizza()
     {
         $idUrl = (int)$this->request->getVar('id');

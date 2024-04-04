@@ -22,13 +22,28 @@ class Api extends BaseController
 
     public function postMakeCommande()
     {
-        $idUrl = (int)$this->request->getVar('id');
+        $requestBody = $this->request->getBody();
 
-        $c = json_decode($this->request->getBody());
-        $commandeModel = model('CommandeModel');
-        $commandeModel->insertCommande($c);
-            return $this->json($c);
+        $data = json_decode($requestBody, true);
+
+        if (isset($data['id_client'])) {
+            $id_client = $data['id_client'];
+
+            $commandeModel = model('CommandeModel');
+            $id_commande = $commandeModel->insertCommande(['id_client' => $id_client]);
+        } else {
+            return $this->json(['error' => 'id_client is missing in request body'], 400);
+        }
+
+        if (isset($data['pizza'])) {
+            $commandeModel = model('CommandeModel');
+            $commandeModel->insertLigneCommande($id_commande, $data['pizza']);
+            return $this->json(['success' => 'La commande ' . $id_commande . ' a bien été effectuée.'], 400);
+        } else {
+            return $this->json(['error' => 'id_client is missing in request body'], 400);
+        }
     }
+
     public function getPizza()
     {
         $idUrl = (int)$this->request->getVar('id');

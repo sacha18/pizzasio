@@ -21,7 +21,7 @@ use Psr\Log\LoggerInterface;
  */
 abstract class BaseController extends Controller
 {
-     /**
+    /**
      * Instance of the main Request object.
      *
      * @var CLIRequest|IncomingRequest
@@ -105,22 +105,20 @@ abstract class BaseController extends Controller
         parent::initController($request, $response, $logger);
         $this->session = \Config\Services::session();
         $this->router  = service('router');
-        /* @phpstan-ignore-next-line */
         if (! $request->isCLI()) {
             if ($this->acl && ! ($this->router->methodName() === $this->acl_dmz)) {
                 /** @var User $user */
                 $user = session()->get('user');
                 if ($user === null) {
-                    $this->redirect('/Login?backto=' . $_SERVER['REQUEST_URI']);
+                    $this->redirect('/Login');
 
-                    exit(); /** @phpstan-ignore-line */
+                    exit();
                 }
-                //$this->session->user = model('UserModel')->find($user->id);
                 if (! $user->getActive()) {
                     $this->session = null;
-                    $this->redirect('/Login?backto=' . $_SERVER['REQUEST_URI']);
+                    $this->redirect('/Login');
 
-                    exit(); /** @phpstan-ignore-line */
+                    exit();
                 }
             }
 
@@ -129,9 +127,6 @@ abstract class BaseController extends Controller
                 session()->remove('messages');
             }
         }
-        // $this->current_tabmenus = $this->router->methodName();
-        // Preload any models, libraries, etc, here.
-        // E.g.: $this->session = \Config\Services::session();
     }
 
     /**
@@ -143,9 +138,7 @@ abstract class BaseController extends Controller
     public function redirect()
     {
         $url = implode('/', func_get_args());
-        if (substr($url, 0, 4) !== 'http' && substr($url, 0, 1) !== '/') {
-            $url = '/' . $url;
-        }
+        $url = base_url($url); // Utiliser base_url pour inclure le sous-dossier
         header("Location: {$url}");
         if (count($this->messages) > 0) {
             session()->set('messages', $this->messages);
@@ -153,6 +146,7 @@ abstract class BaseController extends Controller
 
         exit; /** @phpstan-ignore-line */
     }
+
 
     /**
      * View
@@ -166,20 +160,20 @@ abstract class BaseController extends Controller
         $connected = isset($this->session->user);
 
         return view(
-            'templates/head',
-            [
-                'show_menu'  => $connected,
-                'mainmenu'   => $this->mainmenu,
-                'breadcrumb' => $this->breadcrumb,
-                'localmenu'  => $this->menu,
-                'user'       => ($this->session->user ?? null),
-                'menus'      => $this->menus(),
-                'title'      => sprintf(
-                    '%s : %s',
-                    $this->title,
-                    $this->title_prefix
-                )]
-        )
+                'templates/head',
+                [
+                    'show_menu'  => $connected,
+                    'mainmenu'   => $this->mainmenu,
+                    'breadcrumb' => $this->breadcrumb,
+                    'localmenu'  => $this->menu,
+                    'user'       => ($this->session->user ?? null),
+                    'menus'      => $this->menus(),
+                    'title'      => sprintf(
+                        '%s : %s',
+                        $this->title,
+                        $this->title_prefix
+                    )]
+            )
             . (($vue !== null) ? view($vue, $datas) : '')
             . view('templates/footer', ['messages' => $this->messages]);
     }

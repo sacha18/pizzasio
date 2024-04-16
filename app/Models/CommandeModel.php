@@ -25,11 +25,13 @@ class CommandeModel extends Model
         foreach ($pizza as $p) {
             $id_pizza = $p["id"];
             $prix = $p['price'];
+            $size = $p['size'];
 
             $data = array(
                 'id_commande' => $id_commande,
                 'id_pizza' => $id_pizza,
-                'price_commande' => $prix
+                'price_commande' => $prix,
+                'size' => $size,
             );
 
             $builder->insert($data);

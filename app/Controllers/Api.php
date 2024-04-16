@@ -38,7 +38,7 @@ class Api extends BaseController
         if (isset($data['pizza'])) {
             $commandeModel = model('CommandeModel');
             $commandeModel->insertLigneCommande($id_commande, $data['pizza']);
-            return $this->json(['success' => 'La commande ' . $id_commande . ' a bien été effectuée.'], 400);
+            return $this->json(['success' => 'La commande ' . $id_commande . ' a bien été effectuée.'], 200);
         } else {
             return $this->json(['error' => 'id_client is missing in request body'], 400);
         }

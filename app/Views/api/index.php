@@ -32,6 +32,17 @@ $apis = [
         "json_reussite" => '{"id":"2","name":"Calzone","active":"0","base":"27","dough":"20","price":"0"}',
         "json_error" => '{"error":"Pizza not found."}'
     ],
+    [
+        "name" => "postMakeCommande",
+        "id_element" => "panier",
+        "endpoint" => "MakeCommande",
+        "type" => "POST",
+        "description" => "Pour effectuer la commande avec les éléments du panier",
+        "params" => ["id_client" => "int", "pizza" => "array"],
+        "exemple_body" => '{"id_client":"1","pizza":[{"id":"164","size":"xl"},{"id":"164","size":"xl"},{"id":"164","size":"xl"},{"id":"163","size":"xl"},{"id":"172","size":"xl"},{"id":"172","size":"xl"}]}',
+        "json_reussite" => '{"success": "La commande 46 a bien été effectuée."}',
+        "json_error" => '{"error":"Pizza not found."}'
+    ],
 ];
 
 ?>

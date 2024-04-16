@@ -24,12 +24,7 @@ class CommandeModel extends Model
 
         foreach ($pizza as $p) {
             $id_pizza = $p["id"];
-            $prix = $this->db->table('pizza')
-                ->select('price')
-                ->where('id', $id_pizza)
-                ->get()
-                ->getRow()
-                ->price;
+            $prix = $p['price'];
 
             $data = array(
                 'id_commande' => $id_commande,

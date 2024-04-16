@@ -1,9 +1,9 @@
 accueil:
-   title: Accueil
-   url: /
-   perm: none
-   icon: '<i class="nav-icon fas fa-home"></i>'
-   class: main-menu-accueil
+  title: Accueil
+  url: /
+  perm: none
+  icon: '<i class="nav-icon fas fa-home"></i>'
+  class: main-menu-accueil
 
 etape:
   title: Étape

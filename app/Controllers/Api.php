@@ -44,6 +44,23 @@ class Api extends BaseController
         }
     }
 
+    public function getCommande()
+    {
+        $idUrl = (int)$this->request->getVar('id');
+
+        if ($idUrl != null) {
+            $commandeModel = model('CommandeModel');
+            $commande = $commandeModel->getCommandeByIdClient($idUrl);
+            if ($commande != null) {
+                return $this->json($commande);
+            } else {
+                return $this->json(["error" => "Commande not found"], 500);
+            }
+        } else {
+            return $this->json(["error" => "ID not found"], 500);
+        }
+    }
+
 
     public function getPizza()
     {

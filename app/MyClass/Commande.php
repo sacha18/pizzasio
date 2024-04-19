@@ -7,7 +7,7 @@ class Commande
     protected $id_commande;
     protected $date_commande;
     protected $id_client;
-    protected $id_step;
+    protected $total_commande;
 
 
     public function __construct(
@@ -16,10 +16,10 @@ class Commande
         $id_client,
         $total_commande
     ) {
-        $this->$id_commande = $id_commande;
-        $this->$date_commande = $date_commande;
-        $this->id_client = id_client;
-        $this->total_commande = total_commande;
+        $this->id_commande = $id_commande;
+        $this->date_commande = $date_commande;
+        $this->id_client = $id_client;
+        $this->total_commande = $total_commande;
     }
     public function getIdCommande()
     {

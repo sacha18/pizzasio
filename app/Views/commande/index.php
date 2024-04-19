@@ -2,9 +2,6 @@
     <div class="card">
         <div class="card-header">
             <h2 class="card-title">Liste des Commandes</h2>
-            <div class="card-toolbar">
-                <a href="<?= site_url('/Commande/edit/new') ?>" class="btn btn-primary">Nouvelle catégorie</a>
-            </div>
         </div>
         <div class="card-body">
             <table id="allCommandeTable" class="table table-hover ">

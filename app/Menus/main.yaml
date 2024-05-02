@@ -61,6 +61,15 @@ pizza:
       url: /Pizza
       icon: '<i class="nav-icon fas fa-pizza-slice"></i>'
 
+commande:
+  title: Commande
+  url: /Commande
+  icon: '<i class="fa-solid fa-cart-shopping"></i>'
+  subs:
+    commandes:
+      title: Visualiser les commandes
+      url: /Commande
+      icon: '<i class="fa-solid fa-cart-shopping"></i>'
 admin:
   title: Administration
   url: /Users
@@ -69,7 +78,7 @@ admin:
     api:
       title: API
       url: /Api
-      icon: <i class="fa-solid fa-link"></i>
+      icon: '<i class="fa-solid fa-link"></i>'
     users:
       title: Création d'utilisateur
       url: /Users/edit/new

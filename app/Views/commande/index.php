@@ -23,7 +23,7 @@
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
+                    <h5 class="modal-title">Détails de la commande</h5>
                     <!--begin::Close-->
                     <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                         <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
@@ -35,8 +35,8 @@
                     <p>Long modal body text goes here.</p>
                 </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" id="closeBtn">Close</button>
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@
                     var modal = new bootstrap.Modal(document.getElementById('modalCommande'))
                     modal.toggle()
                     var content = `<h4>Commande n°${data.commande.id_commande}</h4>`
-
+                    $('#closeBtn').before(`<h4>Total : ${data.commande.total_commande}€</h4>`)
                     data.ligne_commande.forEach(pizza => {
                         content +=
                             `<div class="card">
@@ -88,6 +88,9 @@
 
 
     $(document).ready(function() {
+        $('#modalCommande').on('hidden.bs.modal', function (e) {
+            $('#closeBtn').prev().remove(); // Supprime l'élément avant le bouton Close
+        });
         var dataTable = $('#allCommandeTable').DataTable({
             "language": {
                 "url": '//cdn.datatables.net/plug-ins/1.13.4/i18n/fr-FR.json',

@@ -64,12 +64,12 @@ pizza:
 commande:
   title: Commande
   url: /Commande
-  icon: '<i class="nav-icon fas fa-folder"></i>'
+  icon: '<i class="fa-solid fa-cart-shopping"></i>'
   subs:
     commandes:
-      title: Gérer les commandes
+      title: Visualiser les commandes
       url: /Commande
-      icon: '<i class="nav-icon fas fa-folder"></i>'
+      icon: '<i class="fa-solid fa-cart-shopping"></i>'
 admin:
   title: Administration
   url: /Users

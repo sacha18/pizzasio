@@ -108,7 +108,7 @@ class Api extends BaseController
                         $pass,
                         $candidate->getPassword()
                     )) {
-                        return $this->json(["id_user" => "1"]);
+                        return $this->json(["id_user" => $candidate->getId()]);
                     } else {
                         $candidate->auth_attempt++;
                         if ($candidate->auth_attempt > 5) {

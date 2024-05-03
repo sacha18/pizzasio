@@ -79,7 +79,6 @@ class CommandeModel extends Model
 
         if ($commande) {
             $ligne_commande = $this->getLigneCommandeByIdCommande($id_commande);
-            $pizzaModel = model('PizzaModel');
             $data = ['commande' => $commande, 'ligne_commande' => $ligne_commande];
             return $data;
         } else {

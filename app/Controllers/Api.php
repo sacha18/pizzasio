@@ -16,7 +16,7 @@ class Api extends BaseController
     public function getAllPizza()
     {
         $pizzaModel = model('PizzaModel');
-        $allPiza = $pizzaModel->getAllPizza();
+        $allPiza = $pizzaModel->getPizzasWithIngredients();
         return $this->json($allPiza);
     }
 

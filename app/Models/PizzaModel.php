@@ -88,6 +88,68 @@ class PizzaModel extends Model
         return $builder->get()->getResultArray();
     }
 
+    public function getPizzasWithIngredients() {
+        $builder = $this->db->table($this->table);
+        $builder->select('pizza.id, pizza.name, pizza.active, ib.name AS base, ip.name AS dough, pizza.price, ing.id AS ingredient_id, ing.name AS ingredient_name');
+        $builder->join('ingredient AS ib', 'pizza.base = ib.id');
+        $builder->join('ingredient AS ip', 'pizza.dough = ip.id');
+        $builder->join('compose_pizza AS cp', 'pizza.id = cp.id_pizza');
+        $builder->join('ingredient AS ing', 'cp.id_ingredient = ing.id');
+        $query = $builder->get();
+        $result = $query->getResult();
+
+        // Tableau pour stocker les pizzas avec leurs ingrédients
+        $pizzasWithIngredients = array();
+
+        // Parcourir les résultats pour regrouper les pizzas avec leurs ingrédients
+        foreach ($result as $pizza) {
+            $pizzaId = $pizza->id;
+            $pizzaName = $pizza->name;
+            $ingredientId = $pizza->ingredient_id;
+            $ingredientName = $pizza->ingredient_name;
+
+            // Vérifier si la pizza existe déjà dans le tableau
+            if (!isset($pizzasWithIngredients[$pizzaId])) {
+                // Si la pizza n'existe pas, l'ajouter au tableau
+                $pizzasWithIngredients[$pizzaId] = array(
+                    'id' => $pizzaId,
+                    'name' => $pizzaName,
+                    'active' => $pizza->active,
+                    'base' => $pizza->base,
+                    'dough' => $pizza->dough,
+                    'price' => $pizza->price,
+                    'ingredients' => array()
+                );
+            }
+
+            // Vérifier si l'ingrédient existe déjà dans la liste des ingrédients de la pizza
+            $ingredientExists = false;
+            foreach ($pizzasWithIngredients[$pizzaId]['ingredients'] as &$ingredient) {
+                if ($ingredient['id'] == $ingredientId) {
+                    // Si l'ingrédient existe déjà, augmenter son compteur
+                    $ingredient['count']++;
+                    $ingredientExists = true;
+                    break;
+                }
+            }
+
+            // Si l'ingrédient n'existe pas dans la liste des ingrédients de la pizza, l'ajouter
+            if (!$ingredientExists) {
+                $pizzasWithIngredients[$pizzaId]['ingredients'][] = array(
+                    'id' => $ingredientId,
+                    'name' => $ingredientName,
+                    'count' => 1
+                );
+            }
+        }
+
+        // Convertir le tableau associatif en un tableau indexé
+        $pizzasWithIngredients = array_values($pizzasWithIngredients);
+
+        return $pizzasWithIngredients;
+    }
+
+
     public function getFilteredPizza($searchValue)
     {
         $builder = $this->builder();

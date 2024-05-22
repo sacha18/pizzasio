@@ -14,14 +14,14 @@ class PizzaModel extends Model
     ];
     protected $useTimestamps = false;
 
-    public function createPizza($name, $base, $pate)
+    public function createPizza($name, $base, $pate, $img_url)
     {
         $builder = $this->db->table($this->table);
         $builder->set('name', $name);
+        $builder->set('active', 1);
         $builder->set('base', $base);
         $builder->set('dough', $pate);
-
-        $builder->set('active', 0);
+        $builder->set('img_url', $img_url);
 
         $builder->insert();
         return $this->db->insertID();
@@ -35,6 +35,7 @@ class PizzaModel extends Model
         if (isset($data['base'])) $builder->set('base', (int) $data['base']);
         if (isset($data['dough'])) $builder->set('dough', (int) $data['dough']);
         if (isset($data['active'])) $builder->set('active', (bool) $data['active']);
+        if (isset($data['img_url'])) $builder->set('img_url', (bool) $data['img_url']);
 
         if (isset($data['id'])) {
             $builder->where('id', $data['id']);

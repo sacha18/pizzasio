@@ -36,7 +36,11 @@ class ComposePizzaModel extends Model
         $builder->select('ingredient.name, ingredient.id, ingredient.price');
         $builder->join('ingredient', 'ingredient.id = 
         compose_pizza.id_ingredient');
+        $builder->join('category', 'ingredient.id_category = category.id');
+        $builder->join('step', 'category.id_step = step.id');
         $builder->where('compose_pizza.id_pizza', $id_pizza);
+        $builder->where('category.name LIKE ', '%Pâte%')->orWhere('step.name NOT LIKE ', '%Pâte%');
+        $builder->where('category.name LIKE ', '%Base%')->orWhere('step.name NOT LIKE ', '%Base%');
         $query = $builder->get();
         $data = $query->getResult();
         return $data;

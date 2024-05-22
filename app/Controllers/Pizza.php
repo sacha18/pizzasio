@@ -24,8 +24,8 @@ class Pizza extends BaseController
         $step = $stepModel->getAllStep();
 
         $ingredientModel = model('IngredientModel');
-        $pate =  $ingredientModel->getIngredientByIdCategory(10);
-        $base =  $ingredientModel->getIngredientByIdCategory(13);
+        $pate = $ingredientModel->getIngredientByIdCategory(10);
+        $base = $ingredientModel->getIngredientByIdCategory(13);
         if ($id_pizza == 'new') {
             $this->addBreadcrumb('Création pizza ', ['Pizza', 'edit', 'new']);
             return $this->view('/pizza/edit', [
@@ -88,9 +88,9 @@ class Pizza extends BaseController
         $pizzaModel = model('PizzaModel');
 
         // Paramètres de pagination et de recherche envoyés par DataTables
-        $draw        = $this->request->getPost('draw');
-        $start       = $this->request->getPost('start');
-        $length      = $this->request->getPost('length');
+        $draw = $this->request->getPost('draw');
+        $start = $this->request->getPost('start');
+        $length = $this->request->getPost('length');
         $searchValue = $this->request->getPost('search')['value'];
 
         // Obtenez les informations sur le tri envoyées par DataTables
@@ -100,10 +100,8 @@ class Pizza extends BaseController
         $orderColumnName = $this->request->getPost('columns')[$orderColumnIndex]['data'];
 
 
-
         // Obtenez les données triées et filtrées pour la colonne "sku_syaleo"
         $data = $pizzaModel->getPaginatedPizza($start, $length, $searchValue, $orderColumnName, $orderDirection);
-
 
 
         // Obtenez le nombre total de lignes sans filtre
@@ -113,10 +111,10 @@ class Pizza extends BaseController
         $filteredRecords = $pizzaModel->getFilteredPizza($searchValue);
 
         $result = [
-            'draw'            => $draw,
-            'recordsTotal'    => $totalRecords,
+            'draw' => $draw,
+            'recordsTotal' => $totalRecords,
             'recordsFiltered' => $filteredRecords,
-            'data'            => $data,
+            'data' => $data,
         ];
         return $this->response->setJSON($result);
     }
@@ -125,14 +123,14 @@ class Pizza extends BaseController
     {
         $data = $this->request->getPost();
         $pizzaModel = model('PizzaModel');
-        $id = $pizzaModel->createPizza($data['name'], $data['base'], $data['pate']);
+        $id = $pizzaModel->createPizza($data['name'], $data['base'], $data['pate'], $data['img_url']);
         $composePizzaModel = model('ComposePizzaModel');
         $data_ing = array();
         foreach ($data['ingredients'] as $ing) {
-            $data_ing[] = ['id_pizza' => (int) $id, 'id_ingredient' => (int) $ing];
+            $data_ing[] = ['id_pizza' => (int)$id, 'id_ingredient' => (int)$ing];
         }
-        $data_ing[] = ['id_pizza' => (int) $id, 'id_ingredient' => (int) $data['base']];
-        $data_ing[] = ['id_pizza' => (int) $id, 'id_ingredient' => (int) $data['pate']];
+        $data_ing[] = ['id_pizza' => (int)$id, 'id_ingredient' => (int)$data['base']];
+        $data_ing[] = ['id_pizza' => (int)$id, 'id_ingredient' => (int)$data['pate']];
         $composePizzaModel->insertPizzaIngredients($data_ing);
     }
 
@@ -142,19 +140,16 @@ class Pizza extends BaseController
         $pizzaModel = model('PizzaModel');
         $composePizzaModel = model('ComposePizzaModel');
 
-        if (isset($data['dough_suppr']) || isset($data['base_suppr'])) {
-            $pizzaModel->deletePizzaDoughOrBase($data);
-        }
-        if (isset($data['ing_suppr'])) {
-            $composePizzaModel->deletePizzaIngredients($data);
-        }
-        if (isset($data['dough']) || isset($data['base'])) {
+        if (isset($data)) {
             $pizzaModel->updatePizza($data);
+            if (isset($data['ing_suppr'])) {
+                $composePizzaModel->deletePizzaIngredients($data);
+            }
         }
         if (isset($data['ingredients'])) {
             $data_ing = array();
             foreach ($data['ingredients'] as $ing) {
-                $data_ing[] = ['id_pizza' => (int) $data['id'], 'id_ingredient' => (int) $ing];
+                $data_ing[] = ['id_pizza' => (int)$data['id'], 'id_ingredient' => (int)$ing];
             }
             $composePizzaModel->insertPizzaIngredients($data_ing);
         }

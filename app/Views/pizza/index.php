@@ -12,6 +12,8 @@
                     <tr class="text-start text-gray400 fw-blod fs-7 text-uppercase gs-0">
                         <th>ID</th>
                         <th>Nom</th>
+                        <th>Prix (€)</th>
+                        <th>Image</th>
                         <th>Active</th>
                         <th></th>
                         <th></th>
@@ -95,10 +97,17 @@
                 {
                     "data": "name"
                 },
+                {"data": "price"},
+                {
+                    "data": 'img_url',
+                    "render": function(data, type, row) {
+                        return `<a href="${row.img_url}" data-toggle="lightbox"><img style="width:50px; height:auto" class="img-thumbnail" src="${row.img_url}"></a>`;
+                    }
+                },
                 {
                     "data": "active",
                     "render": function(data) {
-                        return (data === "1" ? 'Oui' : 'Non');
+                        return '<input type="checkbox" disabled ' + (data === "1" ? 'checked' : '') + '>';
                     }
                 },
                 {

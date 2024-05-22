@@ -10,7 +10,13 @@ class PizzaModel extends Model
     protected $table = 'pizza';
     protected $primaryKey = 'id';
     protected $allowedFields = [
-        'id', 'name', 'base', 'dough', 'active',
+        'id',
+        'name',
+        'active',
+        'base',
+        'dough',
+        'price',
+        'img_url',
     ];
     protected $useTimestamps = false;
 
@@ -22,7 +28,7 @@ class PizzaModel extends Model
         $builder->set('base', $base);
         $builder->set('dough', $pate);
         $builder->set('img_url', $img_url);
-
+        $builder->set('active', 0);
         $builder->insert();
         return $this->db->insertID();
     }
@@ -91,7 +97,7 @@ class PizzaModel extends Model
 
     public function getPizzasWithIngredients() {
         $builder = $this->db->table($this->table);
-        $builder->select('pizza.id, pizza.name, pizza.active, ib.name AS base, ip.name AS dough, pizza.price, ing.id AS ingredient_id, ing.name AS ingredient_name');
+        $builder->select('pizza.id, pizza.name, pizza.active, ib.name AS base, ip.name AS dough, pizza.price, pizza.img_url, ing.id AS ingredient_id, ing.name AS ingredient_name');
         $builder->join('ingredient AS ib', 'pizza.base = ib.id');
         $builder->join('ingredient AS ip', 'pizza.dough = ip.id');
         $builder->join('compose_pizza AS cp', 'pizza.id = cp.id_pizza');
@@ -119,6 +125,7 @@ class PizzaModel extends Model
                     'base' => $pizza->base,
                     'dough' => $pizza->dough,
                     'price' => $pizza->price,
+                    'img_url' => $pizza->img_url,
                     'ingredients' => array()
                 );
             }

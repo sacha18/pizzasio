@@ -41,7 +41,7 @@ class Pizza extends BaseController
         $this->title = "Gérer la pizza";
         if ($pizza) {
             $composePizzaModel = model('ComposePizzaModel');
-            $pizza_ing = $composePizzaModel->getIngredientByPizzaId($pizza['id']);
+            $pizza_ing = $composePizzaModel->getIngredientByPizzaId($pizza['id'], true);
             $this->addBreadcrumb('Edition de ' . $pizza['name'], ['Pizza']);
             $old_price = 7;
 
@@ -123,15 +123,16 @@ class Pizza extends BaseController
     {
         $data = $this->request->getPost();
         $pizzaModel = model('PizzaModel');
-        $id = $pizzaModel->createPizza($data['name'], $data['base'], $data['pate'], $data['img_url']);
+        $id = $pizzaModel->createPizza($data['name'], $data['base'], $data['dough'], $data['img_url']);
         $composePizzaModel = model('ComposePizzaModel');
         $data_ing = array();
         foreach ($data['ingredients'] as $ing) {
             $data_ing[] = ['id_pizza' => (int)$id, 'id_ingredient' => (int)$ing];
         }
         $data_ing[] = ['id_pizza' => (int)$id, 'id_ingredient' => (int)$data['base']];
-        $data_ing[] = ['id_pizza' => (int)$id, 'id_ingredient' => (int)$data['pate']];
+        $data_ing[] = ['id_pizza' => (int)$id, 'id_ingredient' => (int)$data['dough']];
         $composePizzaModel->insertPizzaIngredients($data_ing);
+        return $this->redirect('Pizza');
     }
 
     public function postEditedResult()
@@ -153,6 +154,7 @@ class Pizza extends BaseController
             }
             $composePizzaModel->insertPizzaIngredients($data_ing);
         }
+        return $this->redirect('Pizza');
     }
 
 
@@ -164,4 +166,20 @@ class Pizza extends BaseController
 
         return $this->response->setJSON($ingredients);
     }
+
+    public function postAjaxToogleActive()
+    {
+        $id = $this->request->getPost('id');
+        $isActive = $this->request->getPost('active');
+
+        $pizzaModel = model('PizzaModel');
+        $data = ['id' => $id, 'active' => $isActive];
+        $pizzaModel->updatePizza($data);
+
+        // Vous pouvez retourner une réponse JSON si nécessaire
+        return $this->response->setJSON(['success' => true]);
+    }
+
+
+
 }

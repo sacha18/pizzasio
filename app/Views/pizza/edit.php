@@ -6,24 +6,37 @@
             </h2>
         </div>
         <div class="card-body">
+            <!--begin::Stepper-->
             <div class="stepper stepper-pills stepper-column d-flex flex-column flex-lg-row"
                  id="kt_stepper_example_vertical">
+                <!--begin::Aside-->
                 <div class="d-flex flex-row-auto w-100 w-lg-300px">
-                    <?php $counter = 1; ?>
+                    <!--begin::Nav-->
                     <div class="stepper-nav flex-center">
+                        <!--begin::Step-Name-->
                         <div class="stepper-item me-5 current" data-kt-stepper-element="nav">
+                            <!--begin::Wrapper-->
                             <div class="stepper-wrapper d-flex align-items-center">
+                                <!--begin::Icon-->
                                 <div class="stepper-icon w-40px h-40px">
                                     <i class="stepper-check fas fa-check"></i>
-                                    <span class="stepper-number"><?= $counter++; ?></span>
+                                    <span class="stepper-number">1</span>
                                 </div>
+                                <!--end::Icon-->
+                                <!--begin::Label-->
                                 <div class="stepper-label">
-                                    <h3 class="stepper-title">Nom</h3>
+                                    <h3 class="stepper-title">
+                                        Choix Nom
+                                    </h3>
                                 </div>
+                                <!--end::Label-->
                             </div>
+                            <!--end::Wrapper-->
+                            <!--begin::Line-->
                             <div class="stepper-line h-40px"></div>
+                            <!--end::Line-->
                         </div>
-                        <!-- Ajoutez dynamiquement les étapes ici -->
+                        <!--end::Step-Name-->
                         <?php foreach ($steps as $s): ?>
                             <!--begin::Step-->
                             <div class="stepper-item me-5" data-kt-stepper-element="nav">
@@ -32,7 +45,7 @@
                                     <!--begin::Icon-->
                                     <div class="stepper-icon w-40px h-40px">
                                         <i class="stepper-check fas fa-check"></i>
-                                        <span class="stepper-number"><?= $counter++; ?></span>
+                                        <span class="stepper-number"><?= $s['order'] + 1; ?></span>
                                     </div>
                                     <!--end::Icon-->
                                     <!--begin::Label-->
@@ -51,133 +64,184 @@
                             <!--end::Step-->
                         <?php endforeach; ?>
                         <div class="stepper-item me-5" data-kt-stepper-element="nav">
+                            <!--begin::Wrapper-->
                             <div class="stepper-wrapper d-flex align-items-center">
+                                <!--begin::Icon-->
                                 <div class="stepper-icon w-40px h-40px">
                                     <i class="stepper-check fas fa-check"></i>
-                                    <span class="stepper-number"><?= $counter++; ?></span>
+                                    <span class="stepper-number">5</span>
                                 </div>
+                                <!--end::Icon-->
+                                <!--begin::Label-->
                                 <div class="stepper-label">
-                                    <h3 class="stepper-title">Image</h3>
+                                    <h3 class="stepper-title">
+                                        Choix de l'url de l'image
+                                    </h3>
                                 </div>
+                                <!--end::Label-->
                             </div>
-                            <div class="h-40px"></div>
+                            <!--end::Wrapper-->
                         </div>
                     </div>
+                    <!--end::Nav-->
                 </div>
+                <!--begin::Content-->
                 <div class="flex-row-fluid">
-                    <form class="form w-lg-500px mx-auto"
-                          action="<?= site_url(
-                              isset($pizza) ?
-                                  '/pizza/editedresult' : '/pizza/result') ?>"
-                          method="post"
-                          novalidate="novalidate">
-                        <?php
-                        if (isset($pizza)) {
-                            ?>
-                            <input type="hidden" value="<?= $pizza['id'] ?>" name="id">
-                        <?php } ?>
-                        <div class="mb-5 flex-column current" data-kt-stepper-element="content">
-                            <label class="form-label">Nom</label>
-                            <div class="fv-row mb-10">
-                                <input type="text" class="form-control form-control-solid" name="name"
-                                       placeholder="Reine"
-                                       value="<?= (isset($pizza) && $pizza['name']) ? $pizza['name'] : '' ?>"/>
+                    <!--begin::Form-->
+                    <form class="form w-lg-500px mx-auto" novalidate="novalidate"
+                          action="<?= site_url(isset($pizza) ? "/Pizza/editedresult" : "/Pizza/result") ?>"
+                          method="POST">
+                        <input type="hidden" name="id" value="<?= isset($pizza['id']) ? $pizza['id'] : '' ?>">
+                        <!--begin::Group-->
+                        <div class="mb-5">
+                            <!--begin::Step Name-->
+                            <div class="flex-column current" data-kt-stepper-element="content">
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-10">
+                                    <!--begin::Label-->
+                                    <label class="form-label">Nom de la pizza</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control form-control-solid" name="name"
+                                           placeholder="" value="<?= isset($pizza) ? $pizza['name'] : '' ?>"/>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
                             </div>
-                        </div>
-                        <!-- Ajoutez dynamiquement les étapes ici -->
-                        <div class="mb-5 flex-column" data-kt-stepper-element="content">
-                            <label class="form-label">Pâte</label>
-                            <select class="form-select form-select-solid selectIngredient"
-                                    data-old-price="0"
-                                    name="dough">
-                                <?php foreach ($pate as $p) { ?>
-                                    <option <?= (isset($pizza) && ($pizza['dough'] == $p['id'])) ? 'selected' : '' ?>
-                                            value="<?= $p['id']; ?>"
-                                            data-id="<?= $p['id'] ?>" data-price="<?= $p['price'] ?>">
-                                        <?= $p['name'] . ' ' . '(+ ' . $p['price'] . ' €)'; ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <div class="mb-5 flex-column" data-kt-stepper-element="content">
-                            <label class="form-label">Base</label>
-                            <select class="form-select form-select-solid selectIngredient"
-                                    name="base"
-                                    data-old-price="0">
-                                <?php foreach ($base as $b) { ?>
-                                    <option <?= (isset($pizza) && ($pizza['base'] == $b['id'])) ? 'selected' : '' ?>
-                                            value="<?= $b['id']; ?>" data-price="<?= $b['price'] ?>"
-                                            data-id="<?= $b['id'] ?>"
-                                            data-price="<?= $b['price'] ?>">
-                                        <?= $b['name'] . ' ' . '(+ ' . $b['price'] . ' €)'; ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <div class="mb-5 flex-column" data-kt-stepper-element="content">
-                            <label class="form-label">Ingrédients</label>
-                            <?php
-                            if (isset($pizza)) {
-                                ?>
-                                <div>
+                            <!--end::Step Name-->
+                            <!--begin::Step Pate-->
+                            <div class="flex-column" data-kt-stepper-element="content">
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-10">
+                                    <!--begin::Label-->
+                                    <label class="form-label">Pâte de la pizza</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <select class="form-select form-select-solid selectIngredient" name="dough"
+                                            data-old-price="0">
+                                        <?php foreach ($pate as $pate) : ?>
+                                            <option <?= (isset($pizza) && ($pizza['dough'] == $pate['id'])) ? 'selected' : '' ?>
+                                                    value="<?= $pate['id']; ?>"
+                                                    data-price="<?= $pate['price']; ?>"><?= $pate['name'] . " (+" . $pate['price'] . "€)" ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                            </div>
+                            <!--end::Step Pate-->
+                            <!--begin::Step Base-->
+                            <div class="flex-column" data-kt-stepper-element="content">
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-10">
+                                    <!--begin::Label-->
+                                    <label class="form-label">Base de la pizza</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <select class="form-select form-select-solid selectIngredient" name="base"
+                                            data-old-price="0">
+                                        <?php foreach ($base as $base) : ?>
+                                            <option <?= (isset($pizza) && ($pizza['base'] == $base['id'])) ? 'selected' : '' ?>
+                                                    value="<?= $base['id']; ?>"
+                                                    data-price="<?= $base['price']; ?>"><?= $base['name'] . " (+" . $base['price'] . "€)" ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                            </div>
+                            <!--end::Step Base-->
+                            <!--begin::Step Ingredient-->
+                            <div class="flex-column" data-kt-stepper-element="content">
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-10">
+                                    <!--begin::Label-->
+                                    <label class="form-label">Ingredients de la pizza</label>
+                                    <label class="form-label">Ingrédients</label>
                                     <?php
-                                    foreach ($pizza_ing as $p_ing) {
+                                    if (isset($pizza)) {
                                         ?>
-                                        <div class="btn btn-sm btn-outline me-4 mb-4 position-relative col-3 gap-1 gy-2"
-                                             data-id="<?= $p_ing->id ?>" data-price="<?= $p_ing->price ?>">
-                                            <?= $p_ing->name; ?>
-                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger removeOldIngredient">
+                                        <div>
+                                            <?php
+                                            foreach ($pizza_ing as $p_ing) {
+                                                ?>
+                                                <div class="btn btn-sm btn-outline me-4 mb-4 position-relative col-3 gap-1 gy-2"
+                                                     data-id="<?= $p_ing->id ?>" data-price="<?= $p_ing->price ?>">
+                                                    <?= $p_ing->name; ?>
+                                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger removeOldIngredient">
                                                 X
                                             </span>
+                                                </div>
+                                                <?php
+                                            }
+                                            ?>
                                         </div>
                                         <?php
                                     }
                                     ?>
+                                    <!--begin::Input-->
+                                    <div class="d-flex flex-row">
+                                        <select class="form-select mb-4 me-4" id="categ">
+                                            <?php foreach ($categories as $cat) : ?>
+                                                <?php if ($cat['id'] == 10 || $cat['id'] == 13) continue; ?>
+                                                <option value="<?= $cat['id']; ?>"><?= $cat['name']; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                        <a href="#" class="btn btn-success mb-4" id="btn-add">Ajouter</a>
+                                    </div>
+                                    <div id="emplacement"></div>
+                                    <div id="ing_supprimer"></div>
                                 </div>
-                                <?php
-                            }
-                            ?>
-                            <div class="d-flex flex-row py-5">
-                                <select class="form-select me-4" id="categ">
-                                    <?php foreach ($categories as $cat) {
-                                        if ($cat['id'] == 10 || $cat['id'] == 13) {
-                                            continue;
-                                        }
-                                        ?>
-                                        <option value="<?= $cat['id']; ?>">
-                                            <?= $cat['name']; ?>
-                                        </option>
-                                    <?php } ?>
-                                </select>
-                                <a href="#" class="btn btn-success " id="btn-add">Ajouter</a>
+                                <!--end::Input group-->
                             </div>
-                            <div id="emplacement"></div>
+                            <!--end::Step Ingredient-->
+                            <!--begin::Step Image URL-->
+                            <div class="flex-column" data-kt-stepper-element="content">
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-10">
+                                    <!--begin::Label-->
+                                    <label class="form-label">Url de l'image</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control form-control-solid" name="img_url"
+                                           placeholder="" value="<?= isset($pizza) ? $pizza['img_url'] : '' ?>"/>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                            </div>
+                            <!--end::Step Image URL-->
                         </div>
-                        <div class="mb-5 flex-column" data-kt-stepper-element="content">
-                            <label class="form-label">Image de la pizza</label>
-                            <input type="text" class="form-control form-control-solid" name="img_url"
-                                   value="<?= (isset($pizza) && $pizza['img_url']) ? $pizza['img_url'] : '' ?>"/>
-                        </div>
+                        <!--end::Group-->
+                        <!--begin::Actions-->
                         <div class="d-flex flex-stack justify-content-between align-items-baseline">
-                            <button type="button" class="btn btn-secondary" data-kt-stepper-action="previous">
+                            <!--begin::Wrapper-->
+                            <button type="button" class="btn btn-light btn-active-light-primary"
+                                    data-kt-stepper-action="previous">
                                 Retour
                             </button>
-                            <p class="fs-6">Prix de la pizza : <span
-                                        id="prixtotal"><?= !isset($old_price) ? 0 : $old_price ?></span>€</p>
-                            <button type="button" class="btn btn-primary" data-kt-stepper-action="next">
-                                Continuer
-                            </button>
+                            <p class="fs-6">Prix de la pizza: <span id="prixtotal"><?= $old_price ?? 7 ?></span>€</p>
                             <button type="submit" class="btn btn-primary" data-kt-stepper-action="submit">
-                                <span class="indicator-label"><?= !isset($pizza) ? "Créer" : "Modifier"; ?></span>
-                                <span class="indicator-progress">Please wait... <span
-                                            class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    <span class="indicator-label">
+                                        Finir ma pizza
+                                    </span>
+                                <span class="indicator-progress">
+                                        Patientez... <span
+                                            class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
                             </button>
+                            <button type="button" class="btn btn-primary" data-kt-stepper-action="next">
+                                Suivant
+                            </button>
+                            <!--end::Wrapper-->
                         </div>
-                        <div id="ing_supprimer"></div>
+                        <!--end::Actions-->
                     </form>
+                    <!--end::Form-->
                 </div>
             </div>
+            <!--end::Stepper-->
         </div>
+        <div class="card-footer"></div>
     </div>
 </div>
 <script>

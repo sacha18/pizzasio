@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-header">
                 <h2 class="card-title">
-                    <?= !isset($step) ? "Nouvel étape" : "Edition de " . $step['name'] ?>
+                    <?= !isset($step) ? "Nouvelle étape" : "Edition de " . $step['name'] ?>
                 </h2>
                 <?php
                 if (isset($step)) {

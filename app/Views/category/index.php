@@ -12,7 +12,6 @@
                     <tr class="text-start text-gray400 fw-blod fs-7 text-uppercase gs-0">
                         <th>ID</th>
                         <th>Catégorie</th>
-                        <th>Icon</th>
                         <th>Étape</th>
                         <th></th>
                     </tr>
@@ -40,7 +39,6 @@
             "columns": [
                 { "data": "id" },
                 { "data": "name" },
-                { "data": "icon" },
                 { "data": "id_step" },
                 {
                     "data": "id",

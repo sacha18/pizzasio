@@ -6,18 +6,25 @@ use CodeIgniter\Model;
 
 class ComposePizzaModel extends Model
 {
+    // Définition de la table de la base de données
     protected $table = 'compose_pizza';
+
+    // Champs autorisés à être insérés ou mis à jour
     protected $allowedFields = [
         'id_pizza', 'id_ingredient',
     ];
+
+    // Désactivation de l'utilisation des timestamps
     protected $useTimestamps = false;
 
+    // Méthode pour insérer les ingrédients d'une pizza
     public function insertPizzaIngredients($data)
     {
         $builder = $this->db->table($this->table);
         $builder->insertBatch($data);
     }
 
+    // Méthode pour supprimer les ingrédients d'une pizza
     public function deletePizzaIngredients($data)
     {
         $builder = $this->db->table($this->table);
@@ -30,6 +37,7 @@ class ComposePizzaModel extends Model
         }
     }
 
+    // Méthode pour obtenir les ingrédients par l'ID de la pizza
     public function getIngredientByPizzaId($id_pizza, $withoutDoughAndBase = false)
     {
         $builder = $this->db->table($this->table);

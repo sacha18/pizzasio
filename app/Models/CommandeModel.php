@@ -7,18 +7,25 @@ use CodeIgniter\Model;
 
 class CommandeModel extends Model
 {
+    // Définition de la table de la base de données
     protected $table = 'commande';
+
+    // Champs autorisés à être insérés ou mis à jour
     protected $allowedFields = [
         'id_commande', 'date_commande',
         'id_client', 'total_commande',
     ];
+
+    // Désactivation de l'utilisation des timestamps
     protected $useTimestamps = false;
 
+    // Méthode pour insérer une nouvelle commande
     public function insertCommande($data)
     {
         return $this->insert($data);
     }
 
+    // Méthode pour insérer les lignes de commande associées à une commande
     public function insertLigneCommande($id_commande, $pizza)
     {
         $builder = $this->db->table('ligne_commande');
@@ -39,6 +46,7 @@ class CommandeModel extends Model
         }
     }
 
+    // Méthode pour récupérer les lignes de commande par l'ID de la commande
     public function getLigneCommandeByIdCommande($id)
     {
         $builder = $this->db->table('ligne_commande');
@@ -51,7 +59,7 @@ class CommandeModel extends Model
         foreach ($result as &$ligne) {
             // Obtenir les détails de la pizza correspondant à l'id_pizza
             $pizza = $pizzaModel->getPizzaById($ligne['id_pizza']);
-            // Ajouter le nom de la pizza à l'objet ligne de commande
+            // Ajouter le nom de la pizza et l'URL de l'image à l'objet ligne de commande
             $ligne['name'] = $pizza['name'];
             $ligne['image'] = $pizza['img_url'];
         }
@@ -59,7 +67,7 @@ class CommandeModel extends Model
         return $result;
     }
 
-
+    // Méthode pour récupérer les commandes par l'ID du client
     public function getCommandeByIdClient($id_client)
     {
         $data = [];
@@ -71,6 +79,7 @@ class CommandeModel extends Model
         return $data;
     }
 
+    // Méthode pour récupérer une commande par l'ID du client et l'ID de la commande
     public function getCommandeByIdClientAndIdCommand($id_client, $id_commande)
     {
         $commande = $this->where('id_client', $id_client)
@@ -86,6 +95,7 @@ class CommandeModel extends Model
         }
     }
 
+    // Méthode pour obtenir les commandes paginées avec recherche et tri
     function getPaginatedCommande($start, $length, $searchValue, $orderColumnName, $orderDirection)
     {
         $builder = $this->builder();
@@ -103,31 +113,35 @@ class CommandeModel extends Model
         return $builder->get()->getResultArray();
     }
 
-
+    // Méthode pour obtenir le nombre total de commandes
     public function getTotalCommande()
     {
         return $this->builder()->countAllResults();
     }
+
+    // Méthode pour obtenir le nombre total de commandes filtrées pour la recherche
     public function getFilteredCommande($searchValue)
     {
         $builder = $this->builder();
-        // @phpstan-ignore-next-line
         if (!empty($searchValue)) {
             $builder->like('id_commande', $searchValue);
         }
         return $builder->countAllResults();
     }
 
+    // Méthode pour mettre à jour une commande
     public function updateCommande(Commande $Commande)
     {
         return $this->update($Commande->getIdCommande(), $Commande);
     }
 
+    // Méthode pour créer une commande
     public function createCommande(Commande $Commande)
     {
         return $this->insert($Commande);
     }
 
+    // Méthode pour supprimer une commande
     public function deleteCommande($id)
     {
         return $this->delete($id);
